@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MiniDisc</title></head><body>
+<script src="core.js"></script>
+<script>
+/* A recordable MiniDisc standing in a little display stand: SwiftMD's mascot.
+   Real cartridge: 72 wide x 68 tall x 5 thick (mm = units), a 64 mm magneto-optical disc inside.
+   x = thickness (label side at x = T faces the viewer), y = width (+y viewer-left), z = up.
+
+   How it works:
+   1. In a player, a pin pushes the shutter lock and slides the metal shutter sideways along the insertion edge.
+   2. The shutter's windows (one on each face) line up over the disc: the laser reads from one side, the
+      recording head touches the other.
+   3. The spindle comes up through the hub hole on the back and grabs the metal hub by magnet; the disc spins.
+   4. Out of the player the spring pulls the shutter shut and the lock holds it.
+   5. The write-protect tab on the back, slid open, tells the player not to record.
+
+   Parts (each held by another):
+   CASE      front shell half (label side) . back shell half . label recess + label . spine label on the top edge .
+             chamfered corner (only fits one way round) . alignment notches on both sides . insertion arrow
+   DISC      polycarbonate disc . recording layer (magneto-optical band) . metal hub on its back, through the hub hole
+   SHUTTER   U-shaped steel shutter over the insertion edge (front plate, back plate, wrap) . its slider tab in the
+             inner track . extension spring from the tab to a post in the shell . shutter lock on its pivot
+   INSIDE    circular rib around the disc (holds it centred) . write-protect slider in its slot
+   STAND     base board . front and back rails */
+PALS.grape = { l:'#c9a2ee', m:'#a67dd2', d:'#4b2f66' };
+const T = 5, D = 72, H = 68, Z0 = 3.4;                 // thickness, width, height, bottom of the cartridge
+const ZC = Z0 + 35, YC = 36, DR = 32;                   // disc centre and radius
+const OUT = [...arcUV(70, Z0 + 2, 2, -90, 0, 4), [72, Z0 + 62], [66, Z0 + 68], ...arcUV(2, Z0 + 66, 2, 90, 180, 4), ...arcUV(2, Z0 + 2, 2, 180, 270, 4)];
+const CREAM = '#fff4d6', RECESS = '#2a1f33', BLUSH = '#f59ab8', LOCKC = '#f2c230';
+const DISCM = { l:'#e9e2f2', m:'#cfc4dc', d:'#9a8eaa' }, RIBM = { l:'#bfa0dc', m:'#9c7cbd', d:'#5e4378' };
+const RAILM = { l:'#f6eefc', m:'#ddd0ea', d:'#b2a3c4' };
+const WIN = [27, 42, 45, 63];                           // shutter window (u0, v0, u1, v1) on both faces
+const SHW = 24, SH0 = 24, SHSLIDE = 22;                // shutter width, closed position (u), slide
+
+// local frames on the faces: u to the right, v down, as seen looking at that face
+const FL = (u, v, dx = .3) => [T + dx, D - u, Z0 + H - v];
+const BL = (u, v, dx = .3) => [-dx, u, Z0 + H - v];
+const loc = (fr, pts, dx) => pts.map(([u, v]) => fr(u, v, dx));
+const lrr = (fr, u, v, w, h, r = 0, dx = .3) => loc(fr, r > 0 ? rrUV(u, v, u + w, v + h, Math.min(r, w/2, h/2), 4) : rectUV(u, v, u + w, v + h), dx);
+const lcirc = (fr, cu, cv, r, dx = .3, n = 16) => loc(fr, ellUV(cu, cv, r, r, n), dx);
+const lell = (fr, cu, cv, ru, rv, dx = .3, n = 16) => loc(fr, ellUV(cu, cv, ru, rv, n), dx);
+const lline = (fr, pts, dx = .3) => pd(loc(fr, pts, dx), false);
+const txBack = (x, y, z, str, size, col = INK, weight = 700) => `<text transform="${txM(P(x, y, z), Dv(0,1,0), Dv(0,0,-1))}" font-size="${size}" fill="${col}" text-anchor="middle" font-family="ui-rounded,ui-monospace,Menlo,monospace" font-weight="${weight}" letter-spacing=".04em">${str}</text>`;
+const txFront = (x, y, z, str, size, col = INK, weight = 800) => `<text transform="${txM(P(x, y, z), Dv(0,-1,0), Dv(0,0,-1))}" font-size="${size}" fill="${col}" text-anchor="middle" font-family="ui-rounded,ui-monospace,Menlo,monospace" font-weight="${weight}" letter-spacing=".02em">${str}</text>`;
+const shutterU = st => SH0 + SHSLIDE*st.sh;            // left edge of the shutter (front frame)
+
+/* ---------- the disc's face in the plane x = xf: base, recording band, track rings, a turning sheen ---------- */
+function discFace(xf, st){
+  const disc = (r, n = 48) => on(PX(xf), ellUV(YC, ZC, r, r, n));
+  let s = fill(pd(disc(DR)), DISCM.l);
+  s += fill(pd(disc(30.5)), '#8d77a3') + fill(pd(disc(14.5, 32)), DISCM.l);
+  let rings = ''; for (const r of [18, 22, 26]) rings += pd(disc(r), true);
+  s += `<path d="${rings}" fill="none" stroke="#5a456e" stroke-width=".6" opacity=".45"/>`;
+  const wedge = (a0, a1, r0, r1) => { const o = []; for (let i = 0; i <= 6; i++){ const a = (a0 + (a1 - a0)*i/6)*Math.PI/180; o.push([xf, YC + r1*Math.cos(a), ZC + r1*Math.sin(a)]); }
+    for (let i = 6; i >= 0; i--){ const a = (a0 + (a1 - a0)*i/6)*Math.PI/180; o.push([xf, YC + r0*Math.cos(a), ZC + r0*Math.sin(a)]); } return pd(o); };
+  const a = st.ang;
+  for (const b of [a, a + 180]){
+    s += fill(wedge(b - 12, b + 12, 15, 30.5), '#f5e6ff', 'opacity=".55"');
+    s += fill(wedge(b + 14, b + 26, 15, 30.5), '#9fe3ff', 'opacity=".4"');
+    s += fill(wedge(b - 26, b - 14, 15, 30.5), '#ffc6e6', 'opacity=".4"');
+  }
+  s += ink(pd(disc(DR)), .8) + fill(pd(disc(1.6, 12)), RECESS);
+  return s;
+}
+
+/* ---------- the little face on the label ---------- */
+function labelFace(st){
+  const fr = FL, dx = .36;
+  let s = '';
+  for (const u of [20, 52]) s += fill(pd(lell(fr, u, 16.8, 3.8, 2.1, dx)), BLUSH, 'opacity=".75"');
+  for (const u of [27, 45]){
+    if (st.wp) s += `<path d="${lline(fr, [[u - 3, 12.4], [u, 13.8], [u + 3, 12.4]], dx)}" fill="none" stroke="${INK}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+    else if (st.spin > .05) s += `<path d="${lline(fr, [[u - 3, 13.8], [u, 10.4], [u + 3, 13.8]], dx)}" fill="none" stroke="${INK}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>`;
+    else s += fill(pd(lcirc(fr, u, 12, 3, dx)), INK) + fill(pd(lcirc(fr, u - 1, 11, 1.05, dx + .02, 10)), '#ffffff');
+  }
+  const mouth = st.spin > .05
+    ? fill(pd(loc(fr, [[33, 15.4], ...arcUV(36, 15.4, 3, 180, 360, 8).map(([u, v]) => [u, 30.8 - v])], dx)), '#c2405e') + ink(pd(loc(fr, [[33, 15.4], ...arcUV(36, 15.4, 3, 180, 360, 8).map(([u, v]) => [u, 30.8 - v])], dx)), 1.1)
+    : `<path d="${lline(fr, [[33, 15.4], [34.5, 17.2], [36, 15.8], [37.5, 17.2], [39, 15.4]], dx)}" fill="none" stroke="${INK}" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>`;
+  s += mouth;
+  // a small heart in the corner
+  const heart = Array.from({ length: 28 }, (_, i) => { const t = i/28*2*Math.PI;
+    return [60 + .15*16*Math.sin(t)**3, 9.4 - .15*(13*Math.cos(t) - 5*Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t))]; });
+  s += shape(loc(fr, heart, dx), BLUSH, .8);
+  s += txFront(T + .37, D - 36, Z0 + H - 23.6, 'SwiftMD', 4.4, INK, 800);
+  return s;
+}
+
+/* ---------- the cartridge (one part for sorting; its own faces are drawn by which way they face) ---------- */
+function cartridge(st, m){
+  const FRONT = facing([1,0,0]), BACK = facing([-1,0,0]), TOP = facing([0,0,1]);
+  const su = shutterU(st), ys0 = D - su - SHW, ys1 = D - su;      // shutter span in y
+  const ztop = Z0 + H - 39;                                         // top of the shutter plates
+  let s = '';
+  if (BACK){
+    s += fill(pd(on(PX(0), OUT)), tone([-1,0,0], m));
+    // hub hole with the metal hub, the back window, the write-protect slot, a disc-type hole
+    s += shape(lcirc(BL, YC, Z0 + H - ZC, 7.2, .3, 28), RECESS, 1.2);
+    s += shape(lcirc(BL, YC, Z0 + H - ZC, 5.6, .32, 28), METAL.m, .9);
+    s += fill(pd(lcirc(BL, YC, Z0 + H - ZC, 1.4, .34, 12)), RECESS);
+    for (const k of [0, 1]){ const a = (st.ang + 180*k)*Math.PI/180;
+      s += fill(pd(lcirc(BL, YC + 3.6*Math.cos(a), Z0 + H - ZC + 3.6*Math.sin(a), .7, .34, 8)), METAL.d); }
+    s += shape(lrr(BL, WIN[0], WIN[1], WIN[2] - WIN[0], WIN[3] - WIN[1], 1.5, .3), RECESS, 1.3);
+    s += clipTo(lrr(BL, WIN[0], WIN[1], WIN[2] - WIN[0], WIN[3] - WIN[1], 1.5, .31), discFace(1.9, { ...st, ang: -st.ang }));
+    s += shape(lrr(BL, 3, 3, 8, 6, 1, .3), RECESS, 1);
+    s += shape(lrr(BL, 3.4 + 3.6*st.wp, 3.4, 3.6, 5.2, .8, .34), st.wp ? '#e2483d' : CREAM, .7);
+    s += shape(lcirc(BL, 64, 6, 1.4, .3, 12), RECESS, .7);
+    s += txBack(-.35, 36, Z0 + H - 8, 'BACK', 3.2, mix(tone([-1,0,0], m), '#000000', .45), 800);
+  }
+  s += extrude(OUT, 0, T, m);
+  // alignment notches on both sides
+  if (facing([0,-1,0])) s += shape(on(PY(-.05), rectUV(1.4, Z0 + 40, 3.6, Z0 + 46)), RECESS, .6);
+  if (facing([0,1,0])) s += shape(on(PY(D + .05), rectUV(1.4, Z0 + 40, 3.6, Z0 + 46)), RECESS, .6);
+  if (FRONT){
+    s += fill(pd(on(PX(T), OUT)), tone([1,0,0], m));
+    s += shape(lrr(FL, 4, 3, 64, 26, 3, .3), mix(tone([1,0,0], m), '#000000', .12), 1);   // label recess
+    s += shape(lrr(FL, 5, 4, 62, 24, 2.5, .33), CREAM, .9);
+    s += labelFace(st);
+    // window: dark recess, the disc behind it
+    const win = lrr(FL, WIN[0], WIN[1], WIN[2] - WIN[0], WIN[3] - WIN[1], 1.5, .3);
+    s += fill(pd(win), RECESS) + clipTo(win, discFace(3.1, st)) + ink(pd(win), 1.4);
+    // insertion arrow
+    s += shape(loc(FL, [[9, 44], [15, 44], [12, 50]], .32), mix(tone([1,0,0], m), '#000000', .3), .6);
+  }
+  if (TOP && Z0 + H > 0){
+    const zt = Z0 + H + .05;
+    s += shape(on(PZ(zt), rectUV(.9, 8, 4.1, 62)), CREAM, .7);
+    s += `<text transform="${txM(P(3.2, 35, zt), Dv(0,-1,0), Dv(1,0,0))}" font-size="2.2" fill="${INK}" text-anchor="middle" font-family="ui-rounded,ui-monospace,Menlo,monospace" font-weight="800">SwiftMD</text>`;
+  }
+  if (FRONT) s += ink(pd(on(PX(T), OUT)), 2.2);
+  if (BACK) s += ink(pd(on(PX(0), OUT)), 2.2);
+  s += hullInk([...on(PX(0), OUT), ...on(PX(T), OUT)], 2.8);
+  // the shutter: a steel U over the insertion edge, a plate on each face
+  const plate = (x0, x1) => box(x0, ys0, Z0 - .4, x1, ys1, ztop, METAL, toneI, 1);
+  const grooves = (fr, x) => { let g = ''; for (const v of [41.5, 43.5]) g += pd(on(PX(x), [[ys0 + 2, Z0 + H - v], [ys1 - 2, Z0 + H - v]]), false); return `<path d="${g}" fill="none" stroke="${METAL.d}" stroke-width="1"/>`; };
+  if (FRONT) s += plate(T, T + .4) + grooves(FL, T + .42);
+  if (BACK) s += plate(-.4, 0) + grooves(BL, -.42);
+  return s;
+}
+
+/* ---------- see-through: the parts inside ---------- */
+let MECH_LABELS = '';
+function mech(st, k){
+  const parts = [], put = (b, svg) => parts.push({ box: b, svg });
+  const FRONT = facing([1,0,0]);
+  // rib ring around the disc: far inner wall, the disc and hub, near outer wall
+  const A = on(PX(.8), ellUV(YC, ZC, 33.4, 33.4, 40)), B = on(PX(4.2), ellUV(YC, ZC, 33.4, 33.4, 40));
+  let inner = '';
+  const hub = cylX(.9, 1.9, YC, ZC, 5.5, METAL, toneI, .9, 28);
+  const disc = cylX(1.9, 3.1, YC, ZC, DR, DISCM, toneI, .9, 56) + discFace(FRONT ? 3.12 : 1.88, FRONT ? st : { ...st, ang: -st.ang });
+  inner = FRONT ? hub + disc : disc + hub;
+  put([[.8, YC - 33.4, ZC - 33.4], [4.2, YC + 33.4, ZC + 33.4]], loft(A, B, n => toneI(n, RIBM), true) + inner + loft(A, B, n => toneI(n, RIBM)));
+  // shutter slider tab in its track along the bottom, the spring to a post, the lock
+  const su = shutterU(st), yHi = D - su;
+  put([[1.4, yHi - 3, Z0 + .6], [3.6, yHi, Z0 + 2.8]], box(1.4, yHi - 3, Z0 + .6, 3.6, yHi, Z0 + 2.8, METAL, toneI, .7));
+  { const sp = [], n = 16, y0 = yHi, y1 = 64; for (let i = 0; i <= n; i++) sp.push([2.5, y0 + (y1 - y0)*i/n, Z0 + 1.7 + (i && i < n ? (i % 2 ? .9 : -.9) : 0)]);
+    put([[2, Math.min(y0, y1), Z0 + .6], [3, Math.max(y0, y1) + 1, Z0 + 2.8]], `<path d="${pd(sp, false)}" fill="none" stroke="${INK}" stroke-width="1.5" stroke-linejoin="round"/><path d="${pd(sp, false)}" fill="none" stroke="#e7ecee" stroke-width=".6" stroke-linejoin="round"/>`); }
+  put([[1.6, 64, Z0 + .4], [3.4, 66, Z0 + 3.2]], cylX(1.6, 3.4, 65, Z0 + 1.8, 1, RIBM, toneI, .6, 12));
+  const la = st.sh > .02 && st.sh < .98 ? .5 : 0;
+  put([[1.5, 3, Z0 + .6], [3.5, 12, Z0 + 4]], box(1.5, 4, Z0 + .8 + la, 3.5, 11, Z0 + 2.2 + la, matOf(LOCKC), toneI, .6) + cylX(1.4, 3.6, 10, Z0 + 1.5, .7, METAL, toneI, .5, 10));
+  // the shutter's two plates, over the shell on both faces
+  { const ys0 = D - su - SHW, ztop = Z0 + H - 39;
+    put([[T, ys0, Z0 - .4], [T + .4, yHi, ztop]], box(T, ys0, Z0 - .4, T + .4, yHi, ztop, METAL, toneI, .9));
+    put([[-.4, ys0, Z0 - .4], [0, yHi, ztop]], box(-.4, ys0, Z0 - .4, 0, yHi, ztop, METAL, toneI, .9)); }
+  // write-protect slider in its slot, top corner on the back
+  put([[.3, 3, Z0 + H - 10], [1.8, 12, Z0 + H - 2]], box(.3, 3.4 + 3.6*st.wp, Z0 + H - 8.6, 1.8, 7 + 3.6*st.wp, Z0 + H - 3.4, st.wp ? matOf('#e2483d') : matOf('#f3ead2'), toneI, .6));
+  const sb = byDepth(parts);
+  MECH_LABELS = k <= .6 ? '' : xrCallouts([
+    { at: [3.1, YC + 22, ZC + 10], text: 'DISC', on: st.spin > .05 },
+    { at: [3.1, YC - 20, ZC - 14], text: 'RECORDING LAYER', on: st.spin > .05 },
+    { at: [1.4, YC, ZC + 5.5], text: 'METAL HUB', on: st.spin > .05 },
+    { at: [2.5, YC + 33.4, ZC + 4], text: 'DISC RIB', on: false },
+    { at: [T + .4, D - su - SHW/2, Z0 + H - 39], text: 'SHUTTER', on: st.moving },
+    { at: [2.5, (yHi + 64)/2, Z0 + 1.7], text: 'SHUTTER SPRING', on: st.moving },
+    { at: [2.5, 7.5, Z0 + 2.2 + la], text: 'SHUTTER LOCK', on: st.moving },
+    { at: [1, 5.2 + 3.6*st.wp, Z0 + H - 3.4], text: 'WRITE PROTECT', on: !!st.wp } ], [-3, T + 3, 0, D, 0, Z0 + H]);
+  return sb;
+}
+
+/* ---------- scene ---------- */
+function scene(st, m){
+  let s = board(-15, -6, 20, 78, 3, 5, RAILM);
+  const pts = []; for (const x of [0, T]) for (const [y, z] of OUT) pts.push([x, y, z]);
+  s += castShadow(pts, 3, boardTop(-15, -6, 20, 78, 3, 5));
+  const rail = (x0, x1) => box(x0, 6, 3, x1, 66, 6.2, RAILM, toneI, 1);
+  const k = ease(st.xr || 0);
+  let cart = cartridge(st, m);
+  if (k > 0) cart = xrGhost(cart, '', k, OUT, 0, T, m) + `<g opacity="${f(k)}">${mech(st, k)}</g>`;
+  s += byDepth([
+    { box: [[-3.4, 6, 3], [-.8, 66, 6.2]], svg: rail(-3.4, -.8) },
+    { box: [[-.4, 0, Z0 - .4], [T + .4, D, Z0 + H]], svg: act('disc', cart) },
+    { box: [[T + .8, 6, 3], [T + 3.4, 66, 6.2]], svg: rail(T + .8, T + 3.4) } ]);
+  if (k > .6) s += MECH_LABELS;
+  else {
+    const items = [];
+    if (facing([1,0,0])) items.push({ at: [T + .4, D - 60, Z0 + H - 8], text: 'LABEL', on: false },
+      { at: [T + .4, D - shutterU(st) - SHW/2, Z0 + H - 45], text: 'SHUTTER', on: st.moving },
+      ...(st.sh > .9 ? [{ at: [T, D - 36, Z0 + H - 55], text: 'DISC', on: st.spin > .05 }] : []));
+    if (facing([-1,0,0])) items.push({ at: [0, YC, ZC], text: 'METAL HUB', on: st.spin > .05 },
+      { at: [-.3, 7, Z0 + H - 6], text: 'WRITE PROTECT', on: !!st.wp });
+    items.push({ at: [T + 2, 20, 6.2], text: 'STAND', on: false });
+    s += xrCallouts(items, [-3, T + 3, 0, D, 0, Z0 + H]);
+  }
+  return s;
+}
+
+/* ---------- behaviour ---------- */
+let ui, loopOn = false;
+function run(){
+  if (loopOn) return; loopOn = true;
+  let last = performance.now();
+  ui.animate(() => { const st = ui.st, now = performance.now(), dt = Math.min(100, now - last) / 1000; last = now;
+    const tgt = st.open ? 1 : 0;
+    st.moving = Math.abs(st.sh - tgt) > .001;
+    if (st.moving) st.sh = tgt > st.sh ? Math.min(tgt, st.sh + dt*2.2) : Math.max(tgt, st.sh - dt*2.2);
+    if (st.spinUntil > now && st.sh > .98) st.spin = Math.min(1, st.spin + dt*1.5);
+    else st.spin = Math.max(0, st.spin - dt*.8);
+    st.ang = (st.ang + st.spin*dt*540) % 360;
+    st.wp += ((st.wpOn ? 1 : 0) - st.wp) * Math.min(1, dt*10);
+    if (Math.abs(st.wp - (st.wpOn ? 1 : 0)) < .01) st.wp = st.wpOn ? 1 : 0;
+    if (!st.open && st.spin > 0) st.spin = 0;
+    const busy = st.moving || st.spin > 0 || st.spinUntil > now || st.wp !== (st.wpOn ? 1 : 0);
+    if (!busy) loopOn = false;
+    return busy; });
+}
+function shutter(st){
+  if (st.spin > .05) return ui.flash('Let it stop spinning first');
+  st.open = !st.open; run();
+}
+function spin(st){
+  if (!st.open){ st.open = true; ui.flash('Opening the shutter so the laser can see the disc'); }
+  st.spinUntil = performance.now() + 3200; run();
+}
+function protect(st){ st.wpOn = !st.wpOn; ui.flash(st.wpOn ? 'Write-protected: players won\'t record on it' : 'Recordable again'); run(); }
+
+ui = mountFigure({
+  fig:'01', turn:'full', title:'MiniDisc', palette:'grape',
+  size:[35, 84, Z0 + H + 2], center:[2.5, 36],
+  state:{ open:false, sh:0, spin:0, spinUntil:0, ang:20, wp:0, wpOn:false, moving:false },
+  scene,
+  readout: st => st.spin > .05 ? 'spinning · the laser reads through the window'
+    : st.sh > .98 ? 'shutter open · the disc shows through the window'
+    : st.wpOn ? 'write-protected · sleeping safely' : 'ready · shutter closed',
+  buttons:[
+    { label:'Slide the shutter', onClick:(st) => shutter(st) },
+    { label:'Spin the disc', onClick:(st) => spin(st) },
+    { label:'Write-protect tab', onClick:(st) => protect(st) },
+  ],
+  acts:{ disc:(st) => spin(st) },
+  params:(st, q) => {
+    if (q.has('open')){ st.open = q.get('open') === '1'; st.sh = st.open ? 1 : 0; }
+    if (q.has('spin')) st.spin = +q.get('spin');
+    if (q.has('ang')) st.ang = +q.get('ang');
+    if (q.get('wp') === '1'){ st.wpOn = true; st.wp = 1; }
+  },
+});
+window.__st = ui.st;
+xrMount(() => ui, () => '');
+</script></body></html>

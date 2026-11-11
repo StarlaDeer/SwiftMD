@@ -1,0 +1,2979 @@
+{
+ "netmd.auth": {
+  "result": null,
+  "exchanges": [
+   {
+    "request": 255,
+    "command": "001801ff0e4e6574204d442057616c6b6d616e",
+    "reply": "091801ff0e4e6574204d442057616c6b6d616e"
+   }
+  ]
+ },
+ "netmd.deviceCode": {
+  "result": "S1.600",
+  "exchanges": [
+   {
+    "request": 255,
+    "command": "001812ff",
+    "reply": "0918120021080016"
+   }
+  ]
+ },
+ "netmd.cleanRead": {
+  "result": {
+   "bytes": "040b1219"
+  },
+  "exchanges": [
+   {
+    "request": 255,
+    "command": "001820ff0004208003040100",
+    "reply": "091820000004208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff000420800304",
+    "reply": "091821000004208003040000040b1219abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0004208003040000",
+    "reply": "091820000004208003040000"
+   }
+  ]
+ },
+ "netmd.cleanReadEncrypted": {
+  "result": {
+   "bytes": "ad612c1dfbf0e70f698408e7bdca4867"
+  },
+  "exchanges": [
+   {
+    "request": 255,
+    "command": "001820ff0200100000100101",
+    "reply": "091820000200100000100101"
+   },
+   {
+    "request": 255,
+    "command": "001821ff020010000010",
+    "reply": "09182100020010000010000000070e151c232a31383f464d545b6269abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0200100000100001",
+    "reply": "091820000200100000100001"
+   }
+  ]
+ },
+ "netmd.cleanWrite": {
+  "result": null,
+  "exchanges": [
+   {
+    "request": 255,
+    "command": "001820ff00f03f0002080200",
+    "reply": "0918200000f03f0002080200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff00f03f000208000001020304050607089570",
+    "reply": "0918220000f03f000208"
+   },
+   {
+    "request": 255,
+    "command": "001820ff00f03f0002080000",
+    "reply": "0918200000f03f0002080000"
+   }
+  ]
+ },
+ "netmd.cleanWriteEncrypted": {
+  "result": null,
+  "exchanges": [
+   {
+    "request": 255,
+    "command": "001820ff0200100000100201",
+    "reply": "091820000200100000100201"
+   },
+   {
+    "request": 255,
+    "command": "001822ff02001000001000001feab393ab76c99ffc3904448429af75be0a",
+    "reply": "09182200020010000010"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0200100000100001",
+    "reply": "091820000200100000100001"
+   }
+  ]
+ },
+ "netmd.writeOfAnyLength": {
+  "result": null,
+  "exchanges": [
+   {
+    "request": 255,
+    "command": "001820ff0000400002100200",
+    "reply": "091820000000400002100200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff0000400002100000000102030405060708090a0b0c0d0e0f1d42",
+    "reply": "09182200000040000210"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0000400002100000",
+    "reply": "091820000000400002100000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0010400002100200",
+    "reply": "091820000010400002100200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff0010400002100000101112131415161718191a1b1c1d1e1fe62f",
+    "reply": "09182200001040000210"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0010400002100000",
+    "reply": "091820000010400002100000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0020400002080200",
+    "reply": "091820000020400002080200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff002040000208000020212223242526275e91",
+    "reply": "09182200002040000208"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0020400002080000",
+    "reply": "091820000020400002080000"
+   }
+  ]
+ },
+ "netmd.readPatch": {
+  "result": {
+   "address": 1229077300,
+   "data": "383f464d"
+  },
+  "exchanges": [
+   {
+    "request": 255,
+    "command": "001820ff0034208003040100",
+    "reply": "091820000034208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff003420800304",
+    "reply": "091821000034208003040000343b4249abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0034208003040000",
+    "reply": "091820000034208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0038208003040100",
+    "reply": "091820000038208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff003820800304",
+    "reply": "091821000038208003040000383f464dabcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0038208003040000",
+    "reply": "091820000038208003040000"
+   }
+  ]
+ },
+ "netmd.patch": {
+  "result": null,
+  "exchanges": [
+   {
+    "request": 255,
+    "command": "001820ff0080208003010200",
+    "reply": "091820000080208003010200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff008020800301000005a550",
+    "reply": "09182200008020800301"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010000",
+    "reply": "091820000080208003010000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010200",
+    "reply": "091820000080208003010200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff00802080030100000c8cc1",
+    "reply": "09182200008020800301"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010000",
+    "reply": "091820000080208003010000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040100",
+    "reply": "091820000070208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff007020800304",
+    "reply": "09182100007020800304000070777e85abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040000",
+    "reply": "091820000070208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040200",
+    "reply": "091820000070208003040200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff007020800304000070777e8517fc",
+    "reply": "09182200007020800304"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040000",
+    "reply": "091820000070208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040100",
+    "reply": "091820000070208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff007020800304",
+    "reply": "09182100007020800304000070777e85abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040000",
+    "reply": "091820000070208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040200",
+    "reply": "091820000070208003040200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff007020800304000070777e8517fc",
+    "reply": "09182200007020800304"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040000",
+    "reply": "091820000070208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0074208003040200",
+    "reply": "091820000074208003040200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff0074208003040000c4000000d3b7",
+    "reply": "09182200007420800304"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0074208003040000",
+    "reply": "091820000074208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0078208003040200",
+    "reply": "091820000078208003040200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff0078208003040000dcffffeaadda",
+    "reply": "09182200007820800304"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0078208003040000",
+    "reply": "091820000078208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040100",
+    "reply": "091820000070208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff007020800304",
+    "reply": "09182100007020800304000070777e85abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040000",
+    "reply": "091820000070208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040200",
+    "reply": "091820000070208003040200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff007020800304000071777e857644",
+    "reply": "09182200007020800304"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040000",
+    "reply": "091820000070208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010200",
+    "reply": "091820000080208003010200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff008020800301000005a550",
+    "reply": "09182200008020800301"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010000",
+    "reply": "091820000080208003010000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010200",
+    "reply": "091820000080208003010200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff0080208003010000092991",
+    "reply": "09182200008020800301"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010000",
+    "reply": "091820000080208003010000"
+   }
+  ]
+ },
+ "netmd.unpatch": {
+  "result": null,
+  "exchanges": [
+   {
+    "request": 255,
+    "command": "001820ff0080208003010200",
+    "reply": "091820000080208003010200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff008020800301000005a550",
+    "reply": "09182200008020800301"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010000",
+    "reply": "091820000080208003010000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010200",
+    "reply": "091820000080208003010200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff00802080030100000c8cc1",
+    "reply": "09182200008020800301"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010000",
+    "reply": "091820000080208003010000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040100",
+    "reply": "091820000070208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff007020800304",
+    "reply": "09182100007020800304000070777e85abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040000",
+    "reply": "091820000070208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040200",
+    "reply": "091820000070208003040200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff007020800304000070777e8517fc",
+    "reply": "09182200007020800304"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040000",
+    "reply": "091820000070208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010200",
+    "reply": "091820000080208003010200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff008020800301000005a550",
+    "reply": "09182200008020800301"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010000",
+    "reply": "091820000080208003010000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010200",
+    "reply": "091820000080208003010200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff0080208003010000092991",
+    "reply": "09182200008020800301"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010000",
+    "reply": "091820000080208003010000"
+   }
+  ]
+ },
+ "netmd.display": {
+  "result": null,
+  "exchanges": [
+   {
+    "request": 255,
+    "command": "001851ff01",
+    "reply": "0918510001"
+   },
+   {
+    "request": 255,
+    "command": "001852ff00010053776966744d44000000",
+    "reply": "0918520000010053776966744d44000000"
+   }
+  ]
+ },
+ "netmd.readUTOCSector": {
+  "result": {
+   "bytes": "00070e151c232a31383f464d545b626910171e252c333a41484f565d646b727920272e353c434a51585f666d747b828930373e454c535a61686f767d848b929940474e555c636a71787f868d949ba2a950575e656c737a81888f969da4abb2b960676e757c838a91989fa6adb4bbc2c970777e858c939aa1a8afb6bdc4cbd2d980878e959ca3aab1b8bfc6cdd4dbe2e990979ea5acb3bac1c8cfd6dde4ebf2f9a0a7aeb5bcc3cad1d8dfe6edf4fb0209b0b7bec5ccd3dae1e8eff6fd040b1219c0c7ced5dce3eaf1f8ff060d141b2229d0d7dee5ecf3fa01080f161d242b3239e0e7eef5fc030a11181f262d343b4249f0f7fe050c131a21282f363d444b525900070e151c232a31383f464d545b626910171e252c333a41484f565d646b727920272e353c434a51585f666d747b828930373e454c535a61686f767d848b929940474e555c636a71787f868d949ba2a950575e656c737a81888f969da4abb2b960676e757c838a91989fa6adb4bbc2c970777e858c939aa1a8afb6bdc4cbd2d980878e959ca3aab1b8bfc6cdd4dbe2e990979ea5acb3bac1c8cfd6dde4ebf2f9a0a7aeb5bcc3cad1d8dfe6edf4fb0209b0b7bec5ccd3dae1e8eff6fd040b1219c0c7ced5dce3eaf1f8ff060d141b2229d0d7dee5ecf3fa01080f161d242b3239e0e7eef5fc030a11181f262d343b4249f0f7fe050c131a21282f363d444b525900070e151c232a31383f464d545b626910171e252c333a41484f565d646b727920272e353c434a51585f666d747b828930373e454c535a61686f767d848b929940474e555c636a71787f868d949ba2a950575e656c737a81888f969da4abb2b960676e757c838a91989fa6adb4bbc2c970777e858c939aa1a8afb6bdc4cbd2d980878e959ca3aab1b8bfc6cdd4dbe2e990979ea5acb3bac1c8cfd6dde4ebf2f9a0a7aeb5bcc3cad1d8dfe6edf4fb0209b0b7bec5ccd3dae1e8eff6fd040b1219c0c7ced5dce3eaf1f8ff060d141b2229d0d7dee5ecf3fa01080f161d242b3239e0e7eef5fc030a11181f262d343b4249f0f7fe050c131a21282f363d444b525900070e151c232a31383f464d545b626910171e252c333a41484f565d646b727920272e353c434a51585f666d747b828930373e454c535a61686f767d848b929940474e555c636a71787f868d949ba2a950575e656c737a81888f969da4abb2b960676e757c838a91989fa6adb4bbc2c970777e858c939aa1a8afb6bdc4cbd2d980878e959ca3aab1b8bfc6cdd4dbe2e990979ea5acb3bac1c8cfd6dde4ebf2f9a0a7aeb5bcc3cad1d8dfe6edf4fb0209b0b7bec5ccd3dae1e8eff6fd040b1219c0c7ced5dce3eaf1f8ff060d141b2229d0d7dee5ecf3fa01080f161d242b3239e0e7eef5fc030a11181f262d343b4249f0f7fe050c131a21282f363d444b525900070e151c232a31383f464d545b626910171e252c333a41484f565d646b727920272e353c434a51585f666d747b828930373e454c535a61686f767d848b929940474e555c636a71787f868d949ba2a950575e656c737a81888f969da4abb2b960676e757c838a91989fa6adb4bbc2c970777e858c939aa1a8afb6bdc4cbd2d980878e959ca3aab1b8bfc6cdd4dbe2e990979ea5acb3bac1c8cfd6dde4ebf2f9a0a7aeb5bcc3cad1d8dfe6edf4fb0209b0b7bec5ccd3dae1e8eff6fd040b1219c0c7ced5dce3eaf1f8ff060d141b2229d0d7dee5ecf3fa01080f161d242b3239e0e7eef5fc030a11181f262d343b4249f0f7fe050c131a21282f363d444b525900070e151c232a31383f464d545b626910171e252c333a41484f565d646b727920272e353c434a51585f666d747b828930373e454c535a61686f767d848b929940474e555c636a71787f868d949ba2a950575e656c737a81888f969da4abb2b960676e757c838a91989fa6adb4bbc2c970777e858c939aa1a8afb6bdc4cbd2d980878e959ca3aab1b8bfc6cdd4dbe2e990979ea5acb3bac1c8cfd6dde4ebf2f9a0a7aeb5bcc3cad1d8dfe6edf4fb0209b0b7bec5ccd3dae1e8eff6fd040b1219c0c7ced5dce3eaf1f8ff060d141b2229d0d7dee5ecf3fa01080f161d242b3239e0e7eef5fc030a11181f262d343b4249f0f7fe050c131a21282f363d444b525900070e151c232a31383f464d545b626910171e252c333a41484f565d646b727920272e353c434a51585f666d747b828930373e454c535a61686f767d848b929940474e555c636a71787f868d949ba2a950575e656c737a81888f969da4abb2b960676e757c838a91989fa6adb4bbc2c970777e858c939aa1a8afb6bdc4cbd2d980878e959ca3aab1b8bfc6cdd4dbe2e990979ea5acb3bac1c8cfd6dde4ebf2f9a0a7aeb5bcc3cad1d8dfe6edf4fb0209b0b7bec5ccd3dae1e8eff6fd040b1219c0c7ced5dce3eaf1f8ff060d141b2229d0d7dee5ecf3fa01080f161d242b3239e0e7eef5fc030a11181f262d343b4249f0f7fe050c131a21282f363d444b525900070e151c232a31383f464d545b626910171e252c333a41484f565d646b727920272e353c434a51585f666d747b828930373e454c535a61686f767d848b929940474e555c636a71787f868d949ba2a950575e656c737a81888f969da4abb2b960676e757c838a91989fa6adb4bbc2c970777e858c939aa1a8afb6bdc4cbd2d980878e959ca3aab1b8bfc6cdd4dbe2e990979ea5acb3bac1c8cfd6dde4ebf2f9a0a7aeb5bcc3cad1d8dfe6edf4fb0209b0b7bec5ccd3dae1e8eff6fd040b1219c0c7ced5dce3eaf1f8ff060d141b2229d0d7dee5ecf3fa01080f161d242b3239e0e7eef5fc030a11181f262d343b4249f0f7fe050c131a21282f363d444b525900070e151c232a31383f464d545b626910171e252c333a41484f565d646b727920272e353c434a51585f666d747b828930373e454c535a61686f767d848b929940474e555c636a71787f868d949ba2a950575e656c737a81888f969da4abb2b960676e757c838a91989fa6adb4bbc2c970777e858c939aa1a8afb6bdc4cbd2d980878e959ca3aab1b8bfc6cdd4dbe2e990979ea5acb3bac1c8cfd6dde4ebf2f9a0a7aeb5bcc3cad1d8dfe6edf4fb0209b0b7bec5ccd3dae1e8eff6fd040b1219c0c7ced5dce3eaf1f8ff060d141b2229d0d7dee5ecf3fa01080f161d242b3239e0e7eef5fc030a11181f262d343b4249f0f7fe050c131a21282f363d444b525900070e151c232a31383f464d545b626910171e252c333a41484f565d646b727920272e353c434a51585f666d747b8289"
+  },
+  "exchanges": [
+   {
+    "request": 255,
+    "command": "001824ff0100000010",
+    "reply": "09182400010000001000070e151c232a31383f464d545b6269"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100100010",
+    "reply": "09182400010010001010171e252c333a41484f565d646b7279"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100200010",
+    "reply": "09182400010020001020272e353c434a51585f666d747b8289"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100300010",
+    "reply": "09182400010030001030373e454c535a61686f767d848b9299"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100400010",
+    "reply": "09182400010040001040474e555c636a71787f868d949ba2a9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100500010",
+    "reply": "09182400010050001050575e656c737a81888f969da4abb2b9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100600010",
+    "reply": "09182400010060001060676e757c838a91989fa6adb4bbc2c9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100700010",
+    "reply": "09182400010070001070777e858c939aa1a8afb6bdc4cbd2d9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100800010",
+    "reply": "09182400010080001080878e959ca3aab1b8bfc6cdd4dbe2e9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100900010",
+    "reply": "09182400010090001090979ea5acb3bac1c8cfd6dde4ebf2f9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100a00010",
+    "reply": "091824000100a00010a0a7aeb5bcc3cad1d8dfe6edf4fb0209"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100b00010",
+    "reply": "091824000100b00010b0b7bec5ccd3dae1e8eff6fd040b1219"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100c00010",
+    "reply": "091824000100c00010c0c7ced5dce3eaf1f8ff060d141b2229"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100d00010",
+    "reply": "091824000100d00010d0d7dee5ecf3fa01080f161d242b3239"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100e00010",
+    "reply": "091824000100e00010e0e7eef5fc030a11181f262d343b4249"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100f00010",
+    "reply": "091824000100f00010f0f7fe050c131a21282f363d444b5259"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100000110",
+    "reply": "09182400010000011000070e151c232a31383f464d545b6269"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100100110",
+    "reply": "09182400010010011010171e252c333a41484f565d646b7279"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100200110",
+    "reply": "09182400010020011020272e353c434a51585f666d747b8289"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100300110",
+    "reply": "09182400010030011030373e454c535a61686f767d848b9299"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100400110",
+    "reply": "09182400010040011040474e555c636a71787f868d949ba2a9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100500110",
+    "reply": "09182400010050011050575e656c737a81888f969da4abb2b9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100600110",
+    "reply": "09182400010060011060676e757c838a91989fa6adb4bbc2c9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100700110",
+    "reply": "09182400010070011070777e858c939aa1a8afb6bdc4cbd2d9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100800110",
+    "reply": "09182400010080011080878e959ca3aab1b8bfc6cdd4dbe2e9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100900110",
+    "reply": "09182400010090011090979ea5acb3bac1c8cfd6dde4ebf2f9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100a00110",
+    "reply": "091824000100a00110a0a7aeb5bcc3cad1d8dfe6edf4fb0209"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100b00110",
+    "reply": "091824000100b00110b0b7bec5ccd3dae1e8eff6fd040b1219"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100c00110",
+    "reply": "091824000100c00110c0c7ced5dce3eaf1f8ff060d141b2229"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100d00110",
+    "reply": "091824000100d00110d0d7dee5ecf3fa01080f161d242b3239"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100e00110",
+    "reply": "091824000100e00110e0e7eef5fc030a11181f262d343b4249"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100f00110",
+    "reply": "091824000100f00110f0f7fe050c131a21282f363d444b5259"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100000210",
+    "reply": "09182400010000021000070e151c232a31383f464d545b6269"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100100210",
+    "reply": "09182400010010021010171e252c333a41484f565d646b7279"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100200210",
+    "reply": "09182400010020021020272e353c434a51585f666d747b8289"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100300210",
+    "reply": "09182400010030021030373e454c535a61686f767d848b9299"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100400210",
+    "reply": "09182400010040021040474e555c636a71787f868d949ba2a9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100500210",
+    "reply": "09182400010050021050575e656c737a81888f969da4abb2b9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100600210",
+    "reply": "09182400010060021060676e757c838a91989fa6adb4bbc2c9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100700210",
+    "reply": "09182400010070021070777e858c939aa1a8afb6bdc4cbd2d9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100800210",
+    "reply": "09182400010080021080878e959ca3aab1b8bfc6cdd4dbe2e9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100900210",
+    "reply": "09182400010090021090979ea5acb3bac1c8cfd6dde4ebf2f9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100a00210",
+    "reply": "091824000100a00210a0a7aeb5bcc3cad1d8dfe6edf4fb0209"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100b00210",
+    "reply": "091824000100b00210b0b7bec5ccd3dae1e8eff6fd040b1219"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100c00210",
+    "reply": "091824000100c00210c0c7ced5dce3eaf1f8ff060d141b2229"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100d00210",
+    "reply": "091824000100d00210d0d7dee5ecf3fa01080f161d242b3239"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100e00210",
+    "reply": "091824000100e00210e0e7eef5fc030a11181f262d343b4249"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100f00210",
+    "reply": "091824000100f00210f0f7fe050c131a21282f363d444b5259"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100000310",
+    "reply": "09182400010000031000070e151c232a31383f464d545b6269"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100100310",
+    "reply": "09182400010010031010171e252c333a41484f565d646b7279"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100200310",
+    "reply": "09182400010020031020272e353c434a51585f666d747b8289"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100300310",
+    "reply": "09182400010030031030373e454c535a61686f767d848b9299"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100400310",
+    "reply": "09182400010040031040474e555c636a71787f868d949ba2a9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100500310",
+    "reply": "09182400010050031050575e656c737a81888f969da4abb2b9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100600310",
+    "reply": "09182400010060031060676e757c838a91989fa6adb4bbc2c9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100700310",
+    "reply": "09182400010070031070777e858c939aa1a8afb6bdc4cbd2d9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100800310",
+    "reply": "09182400010080031080878e959ca3aab1b8bfc6cdd4dbe2e9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100900310",
+    "reply": "09182400010090031090979ea5acb3bac1c8cfd6dde4ebf2f9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100a00310",
+    "reply": "091824000100a00310a0a7aeb5bcc3cad1d8dfe6edf4fb0209"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100b00310",
+    "reply": "091824000100b00310b0b7bec5ccd3dae1e8eff6fd040b1219"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100c00310",
+    "reply": "091824000100c00310c0c7ced5dce3eaf1f8ff060d141b2229"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100d00310",
+    "reply": "091824000100d00310d0d7dee5ecf3fa01080f161d242b3239"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100e00310",
+    "reply": "091824000100e00310e0e7eef5fc030a11181f262d343b4249"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100f00310",
+    "reply": "091824000100f00310f0f7fe050c131a21282f363d444b5259"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100000410",
+    "reply": "09182400010000041000070e151c232a31383f464d545b6269"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100100410",
+    "reply": "09182400010010041010171e252c333a41484f565d646b7279"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100200410",
+    "reply": "09182400010020041020272e353c434a51585f666d747b8289"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100300410",
+    "reply": "09182400010030041030373e454c535a61686f767d848b9299"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100400410",
+    "reply": "09182400010040041040474e555c636a71787f868d949ba2a9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100500410",
+    "reply": "09182400010050041050575e656c737a81888f969da4abb2b9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100600410",
+    "reply": "09182400010060041060676e757c838a91989fa6adb4bbc2c9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100700410",
+    "reply": "09182400010070041070777e858c939aa1a8afb6bdc4cbd2d9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100800410",
+    "reply": "09182400010080041080878e959ca3aab1b8bfc6cdd4dbe2e9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100900410",
+    "reply": "09182400010090041090979ea5acb3bac1c8cfd6dde4ebf2f9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100a00410",
+    "reply": "091824000100a00410a0a7aeb5bcc3cad1d8dfe6edf4fb0209"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100b00410",
+    "reply": "091824000100b00410b0b7bec5ccd3dae1e8eff6fd040b1219"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100c00410",
+    "reply": "091824000100c00410c0c7ced5dce3eaf1f8ff060d141b2229"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100d00410",
+    "reply": "091824000100d00410d0d7dee5ecf3fa01080f161d242b3239"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100e00410",
+    "reply": "091824000100e00410e0e7eef5fc030a11181f262d343b4249"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100f00410",
+    "reply": "091824000100f00410f0f7fe050c131a21282f363d444b5259"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100000510",
+    "reply": "09182400010000051000070e151c232a31383f464d545b6269"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100100510",
+    "reply": "09182400010010051010171e252c333a41484f565d646b7279"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100200510",
+    "reply": "09182400010020051020272e353c434a51585f666d747b8289"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100300510",
+    "reply": "09182400010030051030373e454c535a61686f767d848b9299"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100400510",
+    "reply": "09182400010040051040474e555c636a71787f868d949ba2a9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100500510",
+    "reply": "09182400010050051050575e656c737a81888f969da4abb2b9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100600510",
+    "reply": "09182400010060051060676e757c838a91989fa6adb4bbc2c9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100700510",
+    "reply": "09182400010070051070777e858c939aa1a8afb6bdc4cbd2d9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100800510",
+    "reply": "09182400010080051080878e959ca3aab1b8bfc6cdd4dbe2e9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100900510",
+    "reply": "09182400010090051090979ea5acb3bac1c8cfd6dde4ebf2f9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100a00510",
+    "reply": "091824000100a00510a0a7aeb5bcc3cad1d8dfe6edf4fb0209"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100b00510",
+    "reply": "091824000100b00510b0b7bec5ccd3dae1e8eff6fd040b1219"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100c00510",
+    "reply": "091824000100c00510c0c7ced5dce3eaf1f8ff060d141b2229"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100d00510",
+    "reply": "091824000100d00510d0d7dee5ecf3fa01080f161d242b3239"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100e00510",
+    "reply": "091824000100e00510e0e7eef5fc030a11181f262d343b4249"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100f00510",
+    "reply": "091824000100f00510f0f7fe050c131a21282f363d444b5259"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100000610",
+    "reply": "09182400010000061000070e151c232a31383f464d545b6269"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100100610",
+    "reply": "09182400010010061010171e252c333a41484f565d646b7279"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100200610",
+    "reply": "09182400010020061020272e353c434a51585f666d747b8289"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100300610",
+    "reply": "09182400010030061030373e454c535a61686f767d848b9299"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100400610",
+    "reply": "09182400010040061040474e555c636a71787f868d949ba2a9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100500610",
+    "reply": "09182400010050061050575e656c737a81888f969da4abb2b9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100600610",
+    "reply": "09182400010060061060676e757c838a91989fa6adb4bbc2c9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100700610",
+    "reply": "09182400010070061070777e858c939aa1a8afb6bdc4cbd2d9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100800610",
+    "reply": "09182400010080061080878e959ca3aab1b8bfc6cdd4dbe2e9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100900610",
+    "reply": "09182400010090061090979ea5acb3bac1c8cfd6dde4ebf2f9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100a00610",
+    "reply": "091824000100a00610a0a7aeb5bcc3cad1d8dfe6edf4fb0209"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100b00610",
+    "reply": "091824000100b00610b0b7bec5ccd3dae1e8eff6fd040b1219"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100c00610",
+    "reply": "091824000100c00610c0c7ced5dce3eaf1f8ff060d141b2229"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100d00610",
+    "reply": "091824000100d00610d0d7dee5ecf3fa01080f161d242b3239"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100e00610",
+    "reply": "091824000100e00610e0e7eef5fc030a11181f262d343b4249"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100f00610",
+    "reply": "091824000100f00610f0f7fe050c131a21282f363d444b5259"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100000710",
+    "reply": "09182400010000071000070e151c232a31383f464d545b6269"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100100710",
+    "reply": "09182400010010071010171e252c333a41484f565d646b7279"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100200710",
+    "reply": "09182400010020071020272e353c434a51585f666d747b8289"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100300710",
+    "reply": "09182400010030071030373e454c535a61686f767d848b9299"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100400710",
+    "reply": "09182400010040071040474e555c636a71787f868d949ba2a9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100500710",
+    "reply": "09182400010050071050575e656c737a81888f969da4abb2b9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100600710",
+    "reply": "09182400010060071060676e757c838a91989fa6adb4bbc2c9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100700710",
+    "reply": "09182400010070071070777e858c939aa1a8afb6bdc4cbd2d9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100800710",
+    "reply": "09182400010080071080878e959ca3aab1b8bfc6cdd4dbe2e9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100900710",
+    "reply": "09182400010090071090979ea5acb3bac1c8cfd6dde4ebf2f9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100a00710",
+    "reply": "091824000100a00710a0a7aeb5bcc3cad1d8dfe6edf4fb0209"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100b00710",
+    "reply": "091824000100b00710b0b7bec5ccd3dae1e8eff6fd040b1219"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100c00710",
+    "reply": "091824000100c00710c0c7ced5dce3eaf1f8ff060d141b2229"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100d00710",
+    "reply": "091824000100d00710d0d7dee5ecf3fa01080f161d242b3239"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100e00710",
+    "reply": "091824000100e00710e0e7eef5fc030a11181f262d343b4249"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100f00710",
+    "reply": "091824000100f00710f0f7fe050c131a21282f363d444b5259"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100000810",
+    "reply": "09182400010000081000070e151c232a31383f464d545b6269"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100100810",
+    "reply": "09182400010010081010171e252c333a41484f565d646b7279"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100200810",
+    "reply": "09182400010020081020272e353c434a51585f666d747b8289"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100300810",
+    "reply": "09182400010030081030373e454c535a61686f767d848b9299"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100400810",
+    "reply": "09182400010040081040474e555c636a71787f868d949ba2a9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100500810",
+    "reply": "09182400010050081050575e656c737a81888f969da4abb2b9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100600810",
+    "reply": "09182400010060081060676e757c838a91989fa6adb4bbc2c9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100700810",
+    "reply": "09182400010070081070777e858c939aa1a8afb6bdc4cbd2d9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100800810",
+    "reply": "09182400010080081080878e959ca3aab1b8bfc6cdd4dbe2e9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100900810",
+    "reply": "09182400010090081090979ea5acb3bac1c8cfd6dde4ebf2f9"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100a00810",
+    "reply": "091824000100a00810a0a7aeb5bcc3cad1d8dfe6edf4fb0209"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100b00810",
+    "reply": "091824000100b00810b0b7bec5ccd3dae1e8eff6fd040b1219"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100c00810",
+    "reply": "091824000100c00810c0c7ced5dce3eaf1f8ff060d141b2229"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100d00810",
+    "reply": "091824000100d00810d0d7dee5ecf3fa01080f161d242b3239"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100e00810",
+    "reply": "091824000100e00810e0e7eef5fc030a11181f262d343b4249"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100f00810",
+    "reply": "091824000100f00810f0f7fe050c131a21282f363d444b5259"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100000910",
+    "reply": "09182400010000091000070e151c232a31383f464d545b6269"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100100910",
+    "reply": "09182400010010091010171e252c333a41484f565d646b7279"
+   },
+   {
+    "request": 255,
+    "command": "001824ff0100200910",
+    "reply": "09182400010020091020272e353c434a51585f666d747b8289"
+   }
+  ]
+ },
+ "netmd.writeUTOCSector": {
+  "result": null,
+  "exchanges": [
+   {
+    "request": 255,
+    "command": "001825ff0200000010000d1a2734414e5b6875828f9ca9b6c3",
+    "reply": "091825000200000010000d1a2734414e5b6875828f9ca9b6c3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200100010d0ddeaf704111e2b3845525f6c798693",
+    "reply": "091825000200100010d0ddeaf704111e2b3845525f6c798693"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200200010a0adbac7d4e1eefb0815222f3c495663",
+    "reply": "091825000200200010a0adbac7d4e1eefb0815222f3c495663"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200300010707d8a97a4b1becbd8e5f2ff0c192633",
+    "reply": "091825000200300010707d8a97a4b1becbd8e5f2ff0c192633"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200400010404d5a6774818e9ba8b5c2cfdce9f603",
+    "reply": "091825000200400010404d5a6774818e9ba8b5c2cfdce9f603"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200500010101d2a3744515e6b7885929facb9c6d3",
+    "reply": "091825000200500010101d2a3744515e6b7885929facb9c6d3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200600010e0edfa0714212e3b4855626f7c8996a3",
+    "reply": "091825000200600010e0edfa0714212e3b4855626f7c8996a3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200700010b0bdcad7e4f1fe0b1825323f4c596673",
+    "reply": "091825000200700010b0bdcad7e4f1fe0b1825323f4c596673"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200800010808d9aa7b4c1cedbe8f5020f1c293643",
+    "reply": "091825000200800010808d9aa7b4c1cedbe8f5020f1c293643"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200900010505d6a7784919eabb8c5d2dfecf90613",
+    "reply": "091825000200900010505d6a7784919eabb8c5d2dfecf90613"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200a00010202d3a4754616e7b8895a2afbcc9d6e3",
+    "reply": "091825000200a00010202d3a4754616e7b8895a2afbcc9d6e3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200b00010f0fd0a1724313e4b5865727f8c99a6b3",
+    "reply": "091825000200b00010f0fd0a1724313e4b5865727f8c99a6b3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200c00010c0cddae7f4010e1b2835424f5c697683",
+    "reply": "091825000200c00010c0cddae7f4010e1b2835424f5c697683"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200d00010909daab7c4d1deebf805121f2c394653",
+    "reply": "091825000200d00010909daab7c4d1deebf805121f2c394653"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200e00010606d7a8794a1aebbc8d5e2effc091623",
+    "reply": "091825000200e00010606d7a8794a1aebbc8d5e2effc091623"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200f00010303d4a5764717e8b98a5b2bfccd9e6f3",
+    "reply": "091825000200f00010303d4a5764717e8b98a5b2bfccd9e6f3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200000110000d1a2734414e5b6875828f9ca9b6c3",
+    "reply": "091825000200000110000d1a2734414e5b6875828f9ca9b6c3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200100110d0ddeaf704111e2b3845525f6c798693",
+    "reply": "091825000200100110d0ddeaf704111e2b3845525f6c798693"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200200110a0adbac7d4e1eefb0815222f3c495663",
+    "reply": "091825000200200110a0adbac7d4e1eefb0815222f3c495663"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200300110707d8a97a4b1becbd8e5f2ff0c192633",
+    "reply": "091825000200300110707d8a97a4b1becbd8e5f2ff0c192633"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200400110404d5a6774818e9ba8b5c2cfdce9f603",
+    "reply": "091825000200400110404d5a6774818e9ba8b5c2cfdce9f603"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200500110101d2a3744515e6b7885929facb9c6d3",
+    "reply": "091825000200500110101d2a3744515e6b7885929facb9c6d3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200600110e0edfa0714212e3b4855626f7c8996a3",
+    "reply": "091825000200600110e0edfa0714212e3b4855626f7c8996a3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200700110b0bdcad7e4f1fe0b1825323f4c596673",
+    "reply": "091825000200700110b0bdcad7e4f1fe0b1825323f4c596673"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200800110808d9aa7b4c1cedbe8f5020f1c293643",
+    "reply": "091825000200800110808d9aa7b4c1cedbe8f5020f1c293643"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200900110505d6a7784919eabb8c5d2dfecf90613",
+    "reply": "091825000200900110505d6a7784919eabb8c5d2dfecf90613"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200a00110202d3a4754616e7b8895a2afbcc9d6e3",
+    "reply": "091825000200a00110202d3a4754616e7b8895a2afbcc9d6e3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200b00110f0fd0a1724313e4b5865727f8c99a6b3",
+    "reply": "091825000200b00110f0fd0a1724313e4b5865727f8c99a6b3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200c00110c0cddae7f4010e1b2835424f5c697683",
+    "reply": "091825000200c00110c0cddae7f4010e1b2835424f5c697683"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200d00110909daab7c4d1deebf805121f2c394653",
+    "reply": "091825000200d00110909daab7c4d1deebf805121f2c394653"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200e00110606d7a8794a1aebbc8d5e2effc091623",
+    "reply": "091825000200e00110606d7a8794a1aebbc8d5e2effc091623"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200f00110303d4a5764717e8b98a5b2bfccd9e6f3",
+    "reply": "091825000200f00110303d4a5764717e8b98a5b2bfccd9e6f3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200000210000d1a2734414e5b6875828f9ca9b6c3",
+    "reply": "091825000200000210000d1a2734414e5b6875828f9ca9b6c3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200100210d0ddeaf704111e2b3845525f6c798693",
+    "reply": "091825000200100210d0ddeaf704111e2b3845525f6c798693"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200200210a0adbac7d4e1eefb0815222f3c495663",
+    "reply": "091825000200200210a0adbac7d4e1eefb0815222f3c495663"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200300210707d8a97a4b1becbd8e5f2ff0c192633",
+    "reply": "091825000200300210707d8a97a4b1becbd8e5f2ff0c192633"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200400210404d5a6774818e9ba8b5c2cfdce9f603",
+    "reply": "091825000200400210404d5a6774818e9ba8b5c2cfdce9f603"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200500210101d2a3744515e6b7885929facb9c6d3",
+    "reply": "091825000200500210101d2a3744515e6b7885929facb9c6d3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200600210e0edfa0714212e3b4855626f7c8996a3",
+    "reply": "091825000200600210e0edfa0714212e3b4855626f7c8996a3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200700210b0bdcad7e4f1fe0b1825323f4c596673",
+    "reply": "091825000200700210b0bdcad7e4f1fe0b1825323f4c596673"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200800210808d9aa7b4c1cedbe8f5020f1c293643",
+    "reply": "091825000200800210808d9aa7b4c1cedbe8f5020f1c293643"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200900210505d6a7784919eabb8c5d2dfecf90613",
+    "reply": "091825000200900210505d6a7784919eabb8c5d2dfecf90613"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200a00210202d3a4754616e7b8895a2afbcc9d6e3",
+    "reply": "091825000200a00210202d3a4754616e7b8895a2afbcc9d6e3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200b00210f0fd0a1724313e4b5865727f8c99a6b3",
+    "reply": "091825000200b00210f0fd0a1724313e4b5865727f8c99a6b3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200c00210c0cddae7f4010e1b2835424f5c697683",
+    "reply": "091825000200c00210c0cddae7f4010e1b2835424f5c697683"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200d00210909daab7c4d1deebf805121f2c394653",
+    "reply": "091825000200d00210909daab7c4d1deebf805121f2c394653"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200e00210606d7a8794a1aebbc8d5e2effc091623",
+    "reply": "091825000200e00210606d7a8794a1aebbc8d5e2effc091623"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200f00210303d4a5764717e8b98a5b2bfccd9e6f3",
+    "reply": "091825000200f00210303d4a5764717e8b98a5b2bfccd9e6f3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200000310000d1a2734414e5b6875828f9ca9b6c3",
+    "reply": "091825000200000310000d1a2734414e5b6875828f9ca9b6c3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200100310d0ddeaf704111e2b3845525f6c798693",
+    "reply": "091825000200100310d0ddeaf704111e2b3845525f6c798693"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200200310a0adbac7d4e1eefb0815222f3c495663",
+    "reply": "091825000200200310a0adbac7d4e1eefb0815222f3c495663"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200300310707d8a97a4b1becbd8e5f2ff0c192633",
+    "reply": "091825000200300310707d8a97a4b1becbd8e5f2ff0c192633"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200400310404d5a6774818e9ba8b5c2cfdce9f603",
+    "reply": "091825000200400310404d5a6774818e9ba8b5c2cfdce9f603"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200500310101d2a3744515e6b7885929facb9c6d3",
+    "reply": "091825000200500310101d2a3744515e6b7885929facb9c6d3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200600310e0edfa0714212e3b4855626f7c8996a3",
+    "reply": "091825000200600310e0edfa0714212e3b4855626f7c8996a3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200700310b0bdcad7e4f1fe0b1825323f4c596673",
+    "reply": "091825000200700310b0bdcad7e4f1fe0b1825323f4c596673"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200800310808d9aa7b4c1cedbe8f5020f1c293643",
+    "reply": "091825000200800310808d9aa7b4c1cedbe8f5020f1c293643"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200900310505d6a7784919eabb8c5d2dfecf90613",
+    "reply": "091825000200900310505d6a7784919eabb8c5d2dfecf90613"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200a00310202d3a4754616e7b8895a2afbcc9d6e3",
+    "reply": "091825000200a00310202d3a4754616e7b8895a2afbcc9d6e3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200b00310f0fd0a1724313e4b5865727f8c99a6b3",
+    "reply": "091825000200b00310f0fd0a1724313e4b5865727f8c99a6b3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200c00310c0cddae7f4010e1b2835424f5c697683",
+    "reply": "091825000200c00310c0cddae7f4010e1b2835424f5c697683"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200d00310909daab7c4d1deebf805121f2c394653",
+    "reply": "091825000200d00310909daab7c4d1deebf805121f2c394653"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200e00310606d7a8794a1aebbc8d5e2effc091623",
+    "reply": "091825000200e00310606d7a8794a1aebbc8d5e2effc091623"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200f00310303d4a5764717e8b98a5b2bfccd9e6f3",
+    "reply": "091825000200f00310303d4a5764717e8b98a5b2bfccd9e6f3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200000410000d1a2734414e5b6875828f9ca9b6c3",
+    "reply": "091825000200000410000d1a2734414e5b6875828f9ca9b6c3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200100410d0ddeaf704111e2b3845525f6c798693",
+    "reply": "091825000200100410d0ddeaf704111e2b3845525f6c798693"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200200410a0adbac7d4e1eefb0815222f3c495663",
+    "reply": "091825000200200410a0adbac7d4e1eefb0815222f3c495663"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200300410707d8a97a4b1becbd8e5f2ff0c192633",
+    "reply": "091825000200300410707d8a97a4b1becbd8e5f2ff0c192633"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200400410404d5a6774818e9ba8b5c2cfdce9f603",
+    "reply": "091825000200400410404d5a6774818e9ba8b5c2cfdce9f603"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200500410101d2a3744515e6b7885929facb9c6d3",
+    "reply": "091825000200500410101d2a3744515e6b7885929facb9c6d3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200600410e0edfa0714212e3b4855626f7c8996a3",
+    "reply": "091825000200600410e0edfa0714212e3b4855626f7c8996a3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200700410b0bdcad7e4f1fe0b1825323f4c596673",
+    "reply": "091825000200700410b0bdcad7e4f1fe0b1825323f4c596673"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200800410808d9aa7b4c1cedbe8f5020f1c293643",
+    "reply": "091825000200800410808d9aa7b4c1cedbe8f5020f1c293643"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200900410505d6a7784919eabb8c5d2dfecf90613",
+    "reply": "091825000200900410505d6a7784919eabb8c5d2dfecf90613"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200a00410202d3a4754616e7b8895a2afbcc9d6e3",
+    "reply": "091825000200a00410202d3a4754616e7b8895a2afbcc9d6e3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200b00410f0fd0a1724313e4b5865727f8c99a6b3",
+    "reply": "091825000200b00410f0fd0a1724313e4b5865727f8c99a6b3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200c00410c0cddae7f4010e1b2835424f5c697683",
+    "reply": "091825000200c00410c0cddae7f4010e1b2835424f5c697683"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200d00410909daab7c4d1deebf805121f2c394653",
+    "reply": "091825000200d00410909daab7c4d1deebf805121f2c394653"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200e00410606d7a8794a1aebbc8d5e2effc091623",
+    "reply": "091825000200e00410606d7a8794a1aebbc8d5e2effc091623"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200f00410303d4a5764717e8b98a5b2bfccd9e6f3",
+    "reply": "091825000200f00410303d4a5764717e8b98a5b2bfccd9e6f3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200000510000d1a2734414e5b6875828f9ca9b6c3",
+    "reply": "091825000200000510000d1a2734414e5b6875828f9ca9b6c3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200100510d0ddeaf704111e2b3845525f6c798693",
+    "reply": "091825000200100510d0ddeaf704111e2b3845525f6c798693"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200200510a0adbac7d4e1eefb0815222f3c495663",
+    "reply": "091825000200200510a0adbac7d4e1eefb0815222f3c495663"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200300510707d8a97a4b1becbd8e5f2ff0c192633",
+    "reply": "091825000200300510707d8a97a4b1becbd8e5f2ff0c192633"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200400510404d5a6774818e9ba8b5c2cfdce9f603",
+    "reply": "091825000200400510404d5a6774818e9ba8b5c2cfdce9f603"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200500510101d2a3744515e6b7885929facb9c6d3",
+    "reply": "091825000200500510101d2a3744515e6b7885929facb9c6d3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200600510e0edfa0714212e3b4855626f7c8996a3",
+    "reply": "091825000200600510e0edfa0714212e3b4855626f7c8996a3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200700510b0bdcad7e4f1fe0b1825323f4c596673",
+    "reply": "091825000200700510b0bdcad7e4f1fe0b1825323f4c596673"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200800510808d9aa7b4c1cedbe8f5020f1c293643",
+    "reply": "091825000200800510808d9aa7b4c1cedbe8f5020f1c293643"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200900510505d6a7784919eabb8c5d2dfecf90613",
+    "reply": "091825000200900510505d6a7784919eabb8c5d2dfecf90613"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200a00510202d3a4754616e7b8895a2afbcc9d6e3",
+    "reply": "091825000200a00510202d3a4754616e7b8895a2afbcc9d6e3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200b00510f0fd0a1724313e4b5865727f8c99a6b3",
+    "reply": "091825000200b00510f0fd0a1724313e4b5865727f8c99a6b3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200c00510c0cddae7f4010e1b2835424f5c697683",
+    "reply": "091825000200c00510c0cddae7f4010e1b2835424f5c697683"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200d00510909daab7c4d1deebf805121f2c394653",
+    "reply": "091825000200d00510909daab7c4d1deebf805121f2c394653"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200e00510606d7a8794a1aebbc8d5e2effc091623",
+    "reply": "091825000200e00510606d7a8794a1aebbc8d5e2effc091623"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200f00510303d4a5764717e8b98a5b2bfccd9e6f3",
+    "reply": "091825000200f00510303d4a5764717e8b98a5b2bfccd9e6f3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200000610000d1a2734414e5b6875828f9ca9b6c3",
+    "reply": "091825000200000610000d1a2734414e5b6875828f9ca9b6c3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200100610d0ddeaf704111e2b3845525f6c798693",
+    "reply": "091825000200100610d0ddeaf704111e2b3845525f6c798693"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200200610a0adbac7d4e1eefb0815222f3c495663",
+    "reply": "091825000200200610a0adbac7d4e1eefb0815222f3c495663"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200300610707d8a97a4b1becbd8e5f2ff0c192633",
+    "reply": "091825000200300610707d8a97a4b1becbd8e5f2ff0c192633"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200400610404d5a6774818e9ba8b5c2cfdce9f603",
+    "reply": "091825000200400610404d5a6774818e9ba8b5c2cfdce9f603"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200500610101d2a3744515e6b7885929facb9c6d3",
+    "reply": "091825000200500610101d2a3744515e6b7885929facb9c6d3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200600610e0edfa0714212e3b4855626f7c8996a3",
+    "reply": "091825000200600610e0edfa0714212e3b4855626f7c8996a3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200700610b0bdcad7e4f1fe0b1825323f4c596673",
+    "reply": "091825000200700610b0bdcad7e4f1fe0b1825323f4c596673"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200800610808d9aa7b4c1cedbe8f5020f1c293643",
+    "reply": "091825000200800610808d9aa7b4c1cedbe8f5020f1c293643"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200900610505d6a7784919eabb8c5d2dfecf90613",
+    "reply": "091825000200900610505d6a7784919eabb8c5d2dfecf90613"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200a00610202d3a4754616e7b8895a2afbcc9d6e3",
+    "reply": "091825000200a00610202d3a4754616e7b8895a2afbcc9d6e3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200b00610f0fd0a1724313e4b5865727f8c99a6b3",
+    "reply": "091825000200b00610f0fd0a1724313e4b5865727f8c99a6b3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200c00610c0cddae7f4010e1b2835424f5c697683",
+    "reply": "091825000200c00610c0cddae7f4010e1b2835424f5c697683"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200d00610909daab7c4d1deebf805121f2c394653",
+    "reply": "091825000200d00610909daab7c4d1deebf805121f2c394653"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200e00610606d7a8794a1aebbc8d5e2effc091623",
+    "reply": "091825000200e00610606d7a8794a1aebbc8d5e2effc091623"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200f00610303d4a5764717e8b98a5b2bfccd9e6f3",
+    "reply": "091825000200f00610303d4a5764717e8b98a5b2bfccd9e6f3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200000710000d1a2734414e5b6875828f9ca9b6c3",
+    "reply": "091825000200000710000d1a2734414e5b6875828f9ca9b6c3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200100710d0ddeaf704111e2b3845525f6c798693",
+    "reply": "091825000200100710d0ddeaf704111e2b3845525f6c798693"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200200710a0adbac7d4e1eefb0815222f3c495663",
+    "reply": "091825000200200710a0adbac7d4e1eefb0815222f3c495663"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200300710707d8a97a4b1becbd8e5f2ff0c192633",
+    "reply": "091825000200300710707d8a97a4b1becbd8e5f2ff0c192633"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200400710404d5a6774818e9ba8b5c2cfdce9f603",
+    "reply": "091825000200400710404d5a6774818e9ba8b5c2cfdce9f603"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200500710101d2a3744515e6b7885929facb9c6d3",
+    "reply": "091825000200500710101d2a3744515e6b7885929facb9c6d3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200600710e0edfa0714212e3b4855626f7c8996a3",
+    "reply": "091825000200600710e0edfa0714212e3b4855626f7c8996a3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200700710b0bdcad7e4f1fe0b1825323f4c596673",
+    "reply": "091825000200700710b0bdcad7e4f1fe0b1825323f4c596673"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200800710808d9aa7b4c1cedbe8f5020f1c293643",
+    "reply": "091825000200800710808d9aa7b4c1cedbe8f5020f1c293643"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200900710505d6a7784919eabb8c5d2dfecf90613",
+    "reply": "091825000200900710505d6a7784919eabb8c5d2dfecf90613"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200a00710202d3a4754616e7b8895a2afbcc9d6e3",
+    "reply": "091825000200a00710202d3a4754616e7b8895a2afbcc9d6e3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200b00710f0fd0a1724313e4b5865727f8c99a6b3",
+    "reply": "091825000200b00710f0fd0a1724313e4b5865727f8c99a6b3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200c00710c0cddae7f4010e1b2835424f5c697683",
+    "reply": "091825000200c00710c0cddae7f4010e1b2835424f5c697683"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200d00710909daab7c4d1deebf805121f2c394653",
+    "reply": "091825000200d00710909daab7c4d1deebf805121f2c394653"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200e00710606d7a8794a1aebbc8d5e2effc091623",
+    "reply": "091825000200e00710606d7a8794a1aebbc8d5e2effc091623"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200f00710303d4a5764717e8b98a5b2bfccd9e6f3",
+    "reply": "091825000200f00710303d4a5764717e8b98a5b2bfccd9e6f3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200000810000d1a2734414e5b6875828f9ca9b6c3",
+    "reply": "091825000200000810000d1a2734414e5b6875828f9ca9b6c3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200100810d0ddeaf704111e2b3845525f6c798693",
+    "reply": "091825000200100810d0ddeaf704111e2b3845525f6c798693"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200200810a0adbac7d4e1eefb0815222f3c495663",
+    "reply": "091825000200200810a0adbac7d4e1eefb0815222f3c495663"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200300810707d8a97a4b1becbd8e5f2ff0c192633",
+    "reply": "091825000200300810707d8a97a4b1becbd8e5f2ff0c192633"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200400810404d5a6774818e9ba8b5c2cfdce9f603",
+    "reply": "091825000200400810404d5a6774818e9ba8b5c2cfdce9f603"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200500810101d2a3744515e6b7885929facb9c6d3",
+    "reply": "091825000200500810101d2a3744515e6b7885929facb9c6d3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200600810e0edfa0714212e3b4855626f7c8996a3",
+    "reply": "091825000200600810e0edfa0714212e3b4855626f7c8996a3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200700810b0bdcad7e4f1fe0b1825323f4c596673",
+    "reply": "091825000200700810b0bdcad7e4f1fe0b1825323f4c596673"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200800810808d9aa7b4c1cedbe8f5020f1c293643",
+    "reply": "091825000200800810808d9aa7b4c1cedbe8f5020f1c293643"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200900810505d6a7784919eabb8c5d2dfecf90613",
+    "reply": "091825000200900810505d6a7784919eabb8c5d2dfecf90613"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200a00810202d3a4754616e7b8895a2afbcc9d6e3",
+    "reply": "091825000200a00810202d3a4754616e7b8895a2afbcc9d6e3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200b00810f0fd0a1724313e4b5865727f8c99a6b3",
+    "reply": "091825000200b00810f0fd0a1724313e4b5865727f8c99a6b3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200c00810c0cddae7f4010e1b2835424f5c697683",
+    "reply": "091825000200c00810c0cddae7f4010e1b2835424f5c697683"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200d00810909daab7c4d1deebf805121f2c394653",
+    "reply": "091825000200d00810909daab7c4d1deebf805121f2c394653"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200e00810606d7a8794a1aebbc8d5e2effc091623",
+    "reply": "091825000200e00810606d7a8794a1aebbc8d5e2effc091623"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200f00810303d4a5764717e8b98a5b2bfccd9e6f3",
+    "reply": "091825000200f00810303d4a5764717e8b98a5b2bfccd9e6f3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200000910000d1a2734414e5b6875828f9ca9b6c3",
+    "reply": "091825000200000910000d1a2734414e5b6875828f9ca9b6c3"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200100910d0ddeaf704111e2b3845525f6c798693",
+    "reply": "091825000200100910d0ddeaf704111e2b3845525f6c798693"
+   },
+   {
+    "request": 255,
+    "command": "001825ff0200200910a0adbac7d4e1eefb0815222f3c495663",
+    "reply": "091825000200200910a0adbac7d4e1eefb0815222f3c495663"
+   }
+  ]
+ },
+ "netmd.safetyApply": {
+  "result": "0,1,2,3,4,5,6",
+  "exchanges": [
+   {
+    "request": 255,
+    "command": "001820ff0004208003040100",
+    "reply": "091820000004208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff000420800304",
+    "reply": "091821000004208003040000040b1219abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0004208003040000",
+    "reply": "091820000004208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0008208003040100",
+    "reply": "091820000008208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff000820800304",
+    "reply": "091821000008208003040000080f161dabcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0008208003040000",
+    "reply": "091820000008208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0014208003040100",
+    "reply": "091820000014208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff001420800304",
+    "reply": "091821000014208003040000141b2229abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0014208003040000",
+    "reply": "091820000014208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0018208003040100",
+    "reply": "091820000018208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff001820800304",
+    "reply": "091821000018208003040000181f262dabcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0018208003040000",
+    "reply": "091820000018208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0024208003040100",
+    "reply": "091820000024208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff002420800304",
+    "reply": "091821000024208003040000242b3239abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0024208003040000",
+    "reply": "091820000024208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0028208003040100",
+    "reply": "091820000028208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff002820800304",
+    "reply": "091821000028208003040000282f363dabcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0028208003040000",
+    "reply": "091820000028208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0034208003040100",
+    "reply": "091820000034208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff003420800304",
+    "reply": "091821000034208003040000343b4249abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0034208003040000",
+    "reply": "091820000034208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0038208003040100",
+    "reply": "091820000038208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff003820800304",
+    "reply": "091821000038208003040000383f464dabcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0038208003040000",
+    "reply": "091820000038208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0044208003040100",
+    "reply": "091820000044208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff004420800304",
+    "reply": "091821000044208003040000444b5259abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0044208003040000",
+    "reply": "091820000044208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0048208003040100",
+    "reply": "091820000048208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff004820800304",
+    "reply": "091821000048208003040000484f565dabcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0048208003040000",
+    "reply": "091820000048208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0054208003040100",
+    "reply": "091820000054208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff005420800304",
+    "reply": "091821000054208003040000545b6269abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0054208003040000",
+    "reply": "091820000054208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0058208003040100",
+    "reply": "091820000058208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff005820800304",
+    "reply": "091821000058208003040000585f666dabcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0058208003040000",
+    "reply": "091820000058208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0064208003040100",
+    "reply": "091820000064208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff006420800304",
+    "reply": "091821000064208003040000646b7279abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0064208003040000",
+    "reply": "091820000064208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0068208003040100",
+    "reply": "091820000068208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff006820800304",
+    "reply": "091821000068208003040000686f767dabcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0068208003040000",
+    "reply": "091820000068208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0074208003040100",
+    "reply": "091820000074208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff007420800304",
+    "reply": "091821000074208003040000747b8289abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0074208003040000",
+    "reply": "091820000074208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0078208003040100",
+    "reply": "091820000078208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff007820800304",
+    "reply": "091821000078208003040000787f868dabcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0078208003040000",
+    "reply": "091820000078208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010200",
+    "reply": "091820000080208003010200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff008020800301000005a550",
+    "reply": "09182200008020800301"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010000",
+    "reply": "091820000080208003010000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010200",
+    "reply": "091820000080208003010200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff00802080030100000c8cc1",
+    "reply": "09182200008020800301"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010000",
+    "reply": "091820000080208003010000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040100",
+    "reply": "091820000070208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff007020800304",
+    "reply": "09182100007020800304000070777e85abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040000",
+    "reply": "091820000070208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040200",
+    "reply": "091820000070208003040200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff007020800304000070777e8517fc",
+    "reply": "09182200007020800304"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040000",
+    "reply": "091820000070208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040100",
+    "reply": "091820000070208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff007020800304",
+    "reply": "09182100007020800304000070777e85abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040000",
+    "reply": "091820000070208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040200",
+    "reply": "091820000070208003040200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff007020800304000070777e8517fc",
+    "reply": "09182200007020800304"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040000",
+    "reply": "091820000070208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0074208003040200",
+    "reply": "091820000074208003040200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff0074208003040000c4000000d3b7",
+    "reply": "09182200007420800304"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0074208003040000",
+    "reply": "091820000074208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0078208003040200",
+    "reply": "091820000078208003040200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff0078208003040000dcffffeaadda",
+    "reply": "09182200007820800304"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0078208003040000",
+    "reply": "091820000078208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040100",
+    "reply": "091820000070208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff007020800304",
+    "reply": "09182100007020800304000070777e85abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040000",
+    "reply": "091820000070208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040200",
+    "reply": "091820000070208003040200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff007020800304000071777e857644",
+    "reply": "09182200007020800304"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070208003040000",
+    "reply": "091820000070208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010200",
+    "reply": "091820000080208003010200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff008020800301000005a550",
+    "reply": "09182200008020800301"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010000",
+    "reply": "091820000080208003010000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010200",
+    "reply": "091820000080208003010200"
+   },
+   {
+    "request": 255,
+    "command": "001822ff0080208003010000092991",
+    "reply": "09182200008020800301"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080208003010000",
+    "reply": "091820000080208003010000"
+   }
+  ]
+ },
+ "netmd.safetyFound": {
+  "result": "0,1,2,4,6,7",
+  "exchanges": [
+   {
+    "request": 255,
+    "command": "001820ff0004208003040100",
+    "reply": "091820000004208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff000420800304",
+    "reply": "091821000004208003040000040b1219abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0004208003040000",
+    "reply": "091820000004208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0008208003040100",
+    "reply": "091820000008208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff000820800304",
+    "reply": "091821000008208003040000080f161dabcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0008208003040000",
+    "reply": "091820000008208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0014208003040100",
+    "reply": "091820000014208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff001420800304",
+    "reply": "091821000014208003040000141b2229abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0014208003040000",
+    "reply": "091820000014208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0018208003040100",
+    "reply": "091820000018208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff001820800304",
+    "reply": "091821000018208003040000181f262dabcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0018208003040000",
+    "reply": "091820000018208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0024208003040100",
+    "reply": "091820000024208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff002420800304",
+    "reply": "091821000024208003040000242b3239abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0024208003040000",
+    "reply": "091820000024208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0028208003040100",
+    "reply": "091820000028208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff002820800304",
+    "reply": "091821000028208003040000282f363dabcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0028208003040000",
+    "reply": "091820000028208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0034208003040100",
+    "reply": "091820000034208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff003420800304",
+    "reply": "091821000034208003040000c4000000abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0034208003040000",
+    "reply": "091820000034208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0038208003040100",
+    "reply": "091820000038208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff003820800304",
+    "reply": "091821000038208003040000dcffffeaabcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0038208003040000",
+    "reply": "091820000038208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0044208003040100",
+    "reply": "091820000044208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff004420800304",
+    "reply": "091821000044208003040000444b5259abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0044208003040000",
+    "reply": "091820000044208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0048208003040100",
+    "reply": "091820000048208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff004820800304",
+    "reply": "091821000048208003040000484f565dabcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0048208003040000",
+    "reply": "091820000048208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0054208003040100",
+    "reply": "091820000054208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff005420800304",
+    "reply": "091821000054208003040000c0e60000abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0054208003040000",
+    "reply": "091820000054208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0058208003040100",
+    "reply": "091820000058208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff005820800304",
+    "reply": "091821000058208003040000585f666dabcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0058208003040000",
+    "reply": "091820000058208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0064208003040100",
+    "reply": "091820000064208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff006420800304",
+    "reply": "091821000064208003040000646b7279abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0064208003040000",
+    "reply": "091820000064208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0068208003040100",
+    "reply": "091820000068208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff006820800304",
+    "reply": "091821000068208003040000686f767dabcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0068208003040000",
+    "reply": "091820000068208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0074208003040100",
+    "reply": "091820000074208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff007420800304",
+    "reply": "091821000074208003040000747b8289abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0074208003040000",
+    "reply": "091820000074208003040000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0078208003040100",
+    "reply": "091820000078208003040100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff007820800304",
+    "reply": "091821000078208003040000787f868dabcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0078208003040000",
+    "reply": "091820000078208003040000"
+   }
+  ]
+ },
+ "netmd.safetyTypeR": {
+  "result": "0,1,2,3",
+  "exchanges": []
+ },
+ "netmd.firmwareDump": {
+  "result": {
+   "bytes": "00070e151c232a31383f464d545b62690018210000333a41484f565d646b727920272e353c434a51585f666d747b828930373e454c535a61686f767d848b929940474e555c636a71787f868d949ba2a90018210000737a81888f969da4abb2b960676e757c838a91989fa6adb4bbc2c9700000028c939aa1a8afb6bdc4cbd2d980878e959ca3aab1b8bfc6cdd4dbe2e990979ea5acb3bac1c8cfd6dde4ebf2f9a0a7aeb5bcc3cad1d8dfe6edf4fb0209b0b7bec5ccd3dae1e8eff6fd040b1219c0c7ced5dce3eaf1f8ff060d141b2229d0d7dee5ecf3fa01080f161d242b3239e0e7eef5fc030a11181f262d343b4249f0f7fe050c131a21282f363d444b525900070e151c232a31383f464d545b626910171e252c333a41484f565d646b727920272e353c434a51585f666d747b828930373e454c535a61686f767d848b9299"
+  },
+  "exchanges": [
+   {
+    "request": 255,
+    "command": "001820ff0000000002100100",
+    "reply": "091820000000000002100100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff000000000210",
+    "reply": "09182100000000000210000000070e151c232a31383f464d545b6269abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0000000002100000",
+    "reply": "091820000000000002100000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0010000002100100",
+    "reply": "091820000010000002100100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff001000000210",
+    "reply": "0918210000100000021000000018210000333a41484f565d646b7279abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0010000002100000",
+    "reply": "091820000010000002100000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0020000002100100",
+    "reply": "091820000020000002100100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff002000000210",
+    "reply": "09182100002000000210000020272e353c434a51585f666d747b8289abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0020000002100000",
+    "reply": "091820000020000002100000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0030000002100100",
+    "reply": "091820000030000002100100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff003000000210",
+    "reply": "09182100003000000210000030373e454c535a61686f767d848b9299abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0030000002100000",
+    "reply": "091820000030000002100000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0040000002100100",
+    "reply": "091820000040000002100100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff004000000210",
+    "reply": "09182100004000000210000040474e555c636a71787f868d949ba2a9abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0040000002100000",
+    "reply": "091820000040000002100000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0050000002100100",
+    "reply": "091820000050000002100100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff005000000210",
+    "reply": "0918210000500000021000000018210000737a81888f969da4abb2b9abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0050000002100000",
+    "reply": "091820000050000002100000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0060000002100100",
+    "reply": "091820000060000002100100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff006000000210",
+    "reply": "09182100006000000210000060676e757c838a91989fa6adb4bbc2c9abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0060000002100000",
+    "reply": "091820000060000002100000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070000002100100",
+    "reply": "091820000070000002100100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff007000000210",
+    "reply": "091821000070000002100000700000028c939aa1a8afb6bdc4cbd2d9abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070000002100000",
+    "reply": "091820000070000002100000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080000002100100",
+    "reply": "091820000080000002100100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff008000000210",
+    "reply": "09182100008000000210000080878e959ca3aab1b8bfc6cdd4dbe2e9abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0080000002100000",
+    "reply": "091820000080000002100000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0090000002100100",
+    "reply": "091820000090000002100100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff009000000210",
+    "reply": "09182100009000000210000090979ea5acb3bac1c8cfd6dde4ebf2f9abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0090000002100000",
+    "reply": "091820000090000002100000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff00a0000002100100",
+    "reply": "0918200000a0000002100100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff00a000000210",
+    "reply": "0918210000a0000002100000a0a7aeb5bcc3cad1d8dfe6edf4fb0209abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff00a0000002100000",
+    "reply": "0918200000a0000002100000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff00b0000002100100",
+    "reply": "0918200000b0000002100100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff00b000000210",
+    "reply": "0918210000b0000002100000b0b7bec5ccd3dae1e8eff6fd040b1219abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff00b0000002100000",
+    "reply": "0918200000b0000002100000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff00c0000002100100",
+    "reply": "0918200000c0000002100100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff00c000000210",
+    "reply": "0918210000c0000002100000c0c7ced5dce3eaf1f8ff060d141b2229abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff00c0000002100000",
+    "reply": "0918200000c0000002100000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff00d0000002100100",
+    "reply": "0918200000d0000002100100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff00d000000210",
+    "reply": "0918210000d0000002100000d0d7dee5ecf3fa01080f161d242b3239abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff00d0000002100000",
+    "reply": "0918200000d0000002100000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff00e0000002100100",
+    "reply": "0918200000e0000002100100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff00e000000210",
+    "reply": "0918210000e0000002100000e0e7eef5fc030a11181f262d343b4249abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff00e0000002100000",
+    "reply": "0918200000e0000002100000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff00f0000002100100",
+    "reply": "0918200000f0000002100100"
+   },
+   {
+    "request": 255,
+    "command": "001821ff00f000000210",
+    "reply": "0918210000f0000002100000f0f7fe050c131a21282f363d444b5259abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff00f0000002100000",
+    "reply": "0918200000f0000002100000"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0070000002100300",
+    "reply": "091820000070000002100300"
+   },
+   {
+    "request": 255,
+    "command": "001822ff0070000002100000000000000000000000000000000000000000",
+    "reply": "09182200007000000210"
+   },
+   {
+    "request": 255,
+    "command": "001821ff000000000010",
+    "reply": "09182100000000000010000000070e151c232a31383f464d545b6269abcd"
+   },
+   {
+    "request": 255,
+    "command": "001821ff001000000010",
+    "reply": "09182100001000000010000010171e252c333a41484f565d646b7279abcd"
+   },
+   {
+    "request": 255,
+    "command": "001821ff002000000010",
+    "reply": "09182100002000000010000020272e353c434a51585f666d747b8289abcd"
+   },
+   {
+    "request": 255,
+    "command": "001821ff003000000010",
+    "reply": "09182100003000000010000030373e454c535a61686f767d848b9299abcd"
+   },
+   {
+    "request": 255,
+    "command": "001820ff0000000000100000",
+    "reply": "091820000000000000100000"
+   }
+  ]
+ },
+ "himd.auth": {
+  "result": null,
+  "exchanges": [
+   {
+    "request": 255,
+    "command": "001802ff044d44574d",
+    "reply": "091802ff044d44574d"
+   }
+  ]
+ },
+ "himd.cleanRead": {
+  "result": {
+   "bytes": "080f161d"
+  },
+  "exchanges": [
+   {
+    "request": 255,
+    "command": "00182bff0008408003040100",
+    "reply": "09182b000008408003040100"
+   },
+   {
+    "request": 255,
+    "command": "00182cff0408408003",
+    "reply": "09182c000408408003040000080f161dabcd"
+   },
+   {
+    "request": 255,
+    "command": "00182bff0008408003040000",
+    "reply": "09182b000008408003040000"
+   }
+  ]
+ },
+ "himd.cleanWrite": {
+  "result": null,
+  "exchanges": [
+   {
+    "request": 255,
+    "command": "00182bff00f03f0002040200",
+    "reply": "09182b0000f03f0002040200"
+   },
+   {
+    "request": 255,
+    "command": "00182dff04f03f000204000001020304c616",
+    "reply": "09182d0004f03f000204"
+   },
+   {
+    "request": 255,
+    "command": "00182bff00f03f0002040000",
+    "reply": "09182b0000f03f0002040000"
+   }
+  ]
+ }
+}
