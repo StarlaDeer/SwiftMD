@@ -48,6 +48,10 @@ public protocol DeviceService: Actor {
         save: @escaping @Sendable (Int, DownloadedTrack) async throws -> Void
     ) async throws
 
+    /// The first `sectors` sectors of each of `tracks`, read like a backup, to check a disc's audio
+    /// against an archived copy before erasing it. Read-only.
+    func sampleTracks(_ tracks: [Int], sectors: Int, alsoAllowedFirmware: Set<String>) async throws -> [Int: DownloadedTrack]
+
     /// The disc's TOC and the player's firmware, for archiving. Read-only.
     func archiveInfo() async throws -> (toc: TableOfContents, firmware: String)
 }

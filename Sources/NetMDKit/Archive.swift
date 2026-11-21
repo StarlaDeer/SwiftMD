@@ -72,7 +72,36 @@ public struct DiscRecord: Codable, Sendable, Equatable {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         encoder.dateEncodingStrategy = .iso8601
-        try encoder.encode(self).write(to: folder.appendingPathComponent("disc.json"))
+        try encoder.encode(self).write(to: folder.appendingPathComponent("disc.json"), options: .atomic)
+    }
+
+    public static func load(from folder: URL) -> DiscRecord? {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        guard let data = try? Data(contentsOf: folder.appendingPathComponent("disc.json")) else { return nil }
+        return try? decoder.decode(DiscRecord.self, from: data)
+    }
+
+    /// Tracks with no files, and files that are missing or empty, in `folder`. Empty when every
+    /// track's files are there.
+    public func missingFiles(in folder: URL) -> [String] {
+        tracks.flatMap { track -> [String] in
+            guard !track.files.isEmpty else { return ["track \(track.number)"] }
+            return track.files.filter { file in
+                ((try? FileManager.default.attributesOfItem(atPath: folder.appendingPathComponent(file).path)[.size] as? Int) ?? 0) == 0
+            }
+        }
+    }
+}
+
+public enum ArchiveIndexError: Error, CustomStringConvertible {
+    case unreadable(String)
+
+    public var description: String {
+        switch self {
+        case .unreadable(let why):
+            return "Your archive's list of discs (archive-index.json) couldn't be read, so SwiftMD left it alone: \(why). If the archive is on an external drive or in iCloud, make sure it's connected and downloaded, then try again."
+        }
     }
 }
 
@@ -100,24 +129,67 @@ public struct ArchiveIndex: Codable, Sendable, Equatable {
 
     public init() {}
 
-    public static func load(from root: URL) -> ArchiveIndex {
+    /// Reads the index. No index yet is an empty one. One that can't be read at all (a drive or
+    /// iCloud not ready) throws, so nothing saves over it. One that reads but doesn't make sense is
+    /// kept beside it as "archive-index (unreadable …).json" and rebuilt from the disc.json files in
+    /// the archive's folders, which hold the same information.
+    public static func load(from root: URL) throws -> ArchiveIndex {
         let url = root.appendingPathComponent(fileName)
-        guard let data = try? Data(contentsOf: url) else { return ArchiveIndex() }
+        guard FileManager.default.fileExists(atPath: url.path) else { return ArchiveIndex() }
+        let data: Data
+        do {
+            data = try Data(contentsOf: url)
+        } catch {
+            throw ArchiveIndexError.unreadable(error.localizedDescription)
+        }
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
-        return (try? decoder.decode(ArchiveIndex.self, from: data)) ?? ArchiveIndex()
+        if let index = try? decoder.decode(ArchiveIndex.self, from: data) { return index }
+        let stamp = DateFormatter()
+        stamp.dateFormat = "yyyy-MM-dd HH.mm.ss"
+        try FileManager.default.moveItem(at: url, to: root.appendingPathComponent("archive-index (unreadable \(stamp.string(from: Date()))).json"))
+        let rebuilt = rebuild(from: root)
+        try rebuilt.save(to: root)
+        return rebuilt
     }
 
+    /// The index as the archive's folders describe it (each folder's disc.json), oldest first.
+    public static func rebuild(from root: URL) -> ArchiveIndex {
+        let folders = (try? FileManager.default.contentsOfDirectory(at: root, includingPropertiesForKeys: nil)) ?? []
+        var index = ArchiveIndex()
+        index.discs = folders.compactMap { folder in
+            DiscRecord.load(from: folder).map {
+                Entry(fingerprint: $0.fingerprint, folder: folder.lastPathComponent, title: $0.title,
+                      archivedAt: $0.archivedAt, complete: $0.complete)
+            }
+        }.sorted { ($0.archivedAt, $0.folder) < ($1.archivedAt, $1.folder) }
+        return index
+    }
+
+    /// Saves the index, keeping the previous one as archive-index.json.bak.
     public func save(to root: URL) throws {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         encoder.dateEncodingStrategy = .iso8601
-        try encoder.encode(self).write(to: root.appendingPathComponent(Self.fileName), options: .atomic)
+        let url = root.appendingPathComponent(Self.fileName)
+        let backup = root.appendingPathComponent(Self.fileName + ".bak")
+        if FileManager.default.fileExists(atPath: url.path) {
+            try? FileManager.default.removeItem(at: backup)
+            try? FileManager.default.copyItem(at: url, to: backup)
+        }
+        try encoder.encode(self).write(to: url, options: .atomic)
     }
 
     /// The complete archive of this disc, if there is one.
     public func entry(for fingerprint: String) -> Entry? {
         discs.last { $0.fingerprint == fingerprint && $0.complete }
+    }
+
+    /// Every complete archive of discs with this fingerprint, newest first. Discs with no titles or
+    /// recording dates are told apart only by their track layout, so two different discs can share
+    /// a fingerprint; their audio tells them apart (sampleMatchesArchivedFile).
+    public func entries(for fingerprint: String) -> [Entry] {
+        discs.filter { $0.fingerprint == fingerprint && $0.complete }.reversed()
     }
 
     public mutating func record(_ entry: Entry) {
@@ -162,4 +234,24 @@ extension NetMDInterface {
         let toc = try await factory.readTOC()
         return (toc, firmware)
     }
+}
+
+/// The exact ATRAC copy of a track in its archive folder (not the playable copy).
+public func archivedAudioFile(_ track: DiscRecord.TrackRecord) -> String? {
+    track.files.first { !$0.contains("/") && ($0.hasSuffix(".aea") || $0.hasSuffix(".wav")) }
+}
+
+/// True when a sample read from the disc (downloadTrack with a sector limit: the same header and the
+/// start of the audio) is exactly the start of the archived copy.
+public func sampleMatchesArchivedFile(sample: [UInt8], file: Data) -> Bool {
+    !sample.isEmpty && file.count >= sample.count && file.prefix(sample.count).elementsEqual(sample)
+}
+
+/// Of `paths` (relative to an archive folder), the track files (exact copies and playable copies)
+/// that aren't in `keeping`: copies that stopped early or weren't counted as done.
+public func unlistedTrackFiles(_ paths: [String], keeping: Set<String>) -> [String] {
+    paths.filter { path in
+        let ext = (path as NSString).pathExtension.lowercased()
+        return ["aea", "wav", "m4a"].contains(ext) && !keeping.contains(path)
+    }.sorted()
 }

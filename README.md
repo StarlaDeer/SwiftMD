@@ -47,8 +47,14 @@ use the recorder at a time, so quit Web MiniDisc Pro / ElectronWMD first.
   is backed up into its own folder with a `disc.json` describing it (titles, groups, recording
   dates) and a copy of its table of contents. Discs already in the archive are recognised and
   skipped. Optional: **Erase when done** (see below), and on decks **Eject when done**.
+- **Picks up where it stopped:** if a disc can't be archived in one go (a track the player can't
+  read, a Stop, an unplug), insert it again, on the same player or another, and only the missing
+  tracks are copied. A track the player can't read completely doesn't stop the rest of the disc;
+  what was read of it is kept as "(incomplete)". The archive's list of discs is backed up as it's
+  saved, and rebuilt from the discs' folders if it's ever damaged.
 - **Erase Mode:** for blanking a stack of discs you've already archived. Every disc you insert is
-  looked up in your archive and erased only if it's there (see below); anything else is left alone.
+  looked up in your archive and erased only if it's there (see below); anything else is left alone,
+  with an **Erase Anyway** button (it asks first) for discs you've saved some other way.
 
 ### Erasing archived discs
 
@@ -57,9 +63,13 @@ Mode or with **Erase Mode**. Both are off unless you turn them on, and ask you t
 only erased when:
 
 - every track was copied completely and its playable copy decoded without a single error,
-- every file of the backup is in the archive folder and isn't empty, and
+- every file of the backup is in the archive folder and isn't empty,
 - the disc in the player is still the one that was archived (its table of contents is read again
-  and compared).
+  and compared), and
+- when it's erased because of an earlier archive, its audio matches: the start of its first and last
+  tracks is read and compared byte for byte with the archived copies. Discs without titles or
+  recording dates can only be told apart by their audio, so a different disc with the same track
+  layout is never mistaken for an archived one (Archive Mode archives it as a new disc).
 
 Write-protected discs are never erased. Erasing can't be undone.
 
@@ -74,7 +84,7 @@ recorder.
 
 | Player | Firmware | Tested |
 |---|---|---|
-| Sony MZ-N910 | Type-S S1.600 | Reading, editing, fast backups, Archive Mode |
+| Sony MZ-N910 | Type-S S1.600 | Reading, editing, fast backups, Archive Mode, resuming, Erase Mode (its recording is weak, so it erases unreliably) |
 | Sony MZ-N505 | Type-R R1.400 | Backups (LP2), erasing |
 | Sony MZ-N707 | Type-R R1.300 | Reading, editing, sending music |
 
@@ -94,11 +104,13 @@ these rules:
   Pro doesn't check this.)
 - **Only firmware it knows.** Code that runs on the player only exists for firmware versions it
   was checked against; on anything else SwiftMD refuses before changing anything. Backups have
-  been tried on real players with S1.600 and R1.400; on other firmware SwiftMD asks first.
+  been tried on real players with S1.600 and R1.400; on other firmware SwiftMD asks first. Type-S
+  firmware without a known crash safety patch (S1.100–S1.300) is refused.
 - **Only Sony NetMD recorders.** Backups are refused on other brands and on Hi-MD recorders
   before anything is sent.
 - **If in doubt, stop.** If SwiftMD can't take its code back out of the player, it doesn't try
   anything else: it asks you to unplug the player for a few seconds, which undoes everything.
+  **Stop** always lets SwiftMD finish tidying up first, and Disconnect is greyed out until it's done.
 - **Reading doesn't write.** Showing a disc only sends read commands (a test checks every one).
 
 

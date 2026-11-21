@@ -226,13 +226,13 @@ extension NetMDInterface {
         await lock()
         defer { unlock() }
 
-        try await Task.sleep(for: .milliseconds(200)) // The sharps are slow...
+        await uninterruptibleSleep(.milliseconds(200)) // The sharps are slow...
         try sendCommand(formatQuery(
             "1800 080046 f0030103 28 ff 000100 1001 ffff 00 %b %b %d %d",
             .init(track.format.rawValue), .init(discFormat.rawValue), .init(track.frameCount), .init(totalBytes)
         ))
         _ = try scanQuery(try await readReply(acceptInterim: true), "1800 080046 f0030103 28 00 000100 1001 %?%? 00 %*")
-        try await Task.sleep(for: .milliseconds(200))
+        await uninterruptibleSleep(.milliseconds(200))
 
         var written = 0
         progress?(UploadProgress(writtenBytes: 0, totalBytes: totalBytes))
@@ -281,7 +281,7 @@ public final class UploadSession: @unchecked Sendable {
             if status.state == .ready || status.state == .discBlank { break }
             attempts += 1
             guard attempts < 150 else { throw UploadFailure.deviceNotReady(statusCode: status.operatingStatusCode) }
-            try await Task.sleep(for: .milliseconds(200))
+            await uninterruptibleSleep(.milliseconds(200))
         }
         // Assume there wasn't anything to finalize if these fail.
         try? await device.sessionKeyForget()

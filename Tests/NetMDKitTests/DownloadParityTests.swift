@@ -127,3 +127,85 @@ extension DownloadParityTests {
         #expect(AtracDownloader.testedFirmware == ["S1.600", "R1.400"])
     }
 }
+
+/// If SwiftMD can't take its code back out of the player, it must stop changing things and ask
+/// for an unplug, never report an ordinary error as if the player were clean.
+extension DownloadParityTests {
+    /// A command the player "fails": the replay rejects it, as a real USB error would.
+    static let failingExchange = try! JSONDecoder().decode(ReplayTransport.Exchange.self,
+                                                          from: Data(#"{"request":0,"command":"ff","reply":""}"#.utf8))
+    static let bulk = "download.spStereo.S1.600.bulk"
+    /// Index of each write that starts a patch's main-control sequence (5, then 12 or 9).
+    static func mainControlWrites(_ name: String) -> [Int] {
+        let exchanges = recordings[name]!.exchanges
+        return exchanges.indices.filter { exchanges[$0].bulkIn == nil && exchanges[$0].command.hasPrefix("001822ff008020800301000005") }
+    }
+
+    static func isUnplug(_ error: Error) -> Bool {
+        if case ExploitError.needsUnplug = error { return true }
+        return false
+    }
+
+    func session(_ transport: ReplayTransport) async throws -> ExploitSession {
+        let iface = try await NetMDInterface.open(transport: transport, vendorID: 0x054c, productID: 0x00c7)
+        let session = try await ExploitSession.create(device: iface, factory: NetMDFactory(device: iface, kind: .netmd))
+        session.sleep = { _ in }
+        return session
+    }
+
+    /// Review finding 3: the bulk reader's clean-up fails. Its hooks may still be live, so the
+    /// session must not remove code execution or restore slots over them; it asks for an unplug.
+    @Test func failedBulkCleanUpAsksForAnUnplug() async throws {
+        let exchanges = Self.recordings[Self.bulk]!.exchanges
+        // Where the reader's clean-up starts: after the track has been read.
+        let full = ReplayTransport(exchanges)
+        let fullSession = try await session(full)
+        let fullReader = try AtracDownloader(session: fullSession, method: .bulk)
+        try await fullReader.prepare()
+        _ = try await fullReader.downloadTrack(0)
+        let cleanUpStart = exchanges.count - full.remaining
+        let unpatchStart = try #require(Self.mainControlWrites(Self.bulk).first { $0 > cleanUpStart }) - 1
+
+        let transport = ReplayTransport(Array(exchanges[..<cleanUpStart]) + [Self.failingExchange] + Array(exchanges[unpatchStart...]))
+        let session = try await session(transport)
+        let reader = try AtracDownloader(session: session, method: .bulk)
+        try await reader.prepare()
+        _ = try await reader.downloadTrack(0)
+        let finishError = await #expect(throws: ExploitError.self) { try await reader.finish() }
+        #expect(finishError.map(Self.isUnplug) == true)
+        // Neither a retry nor the session's own clean-up sends anything more.
+        let sent = transport.remaining
+        let retryError = await #expect(throws: ExploitError.self) { try await reader.finish() }
+        #expect(retryError.map(Self.isUnplug) == true)
+        let closeError = await #expect(throws: ExploitError.self) { try await session.close() }
+        #expect(closeError.map(Self.isUnplug) == true)
+        #expect(transport.remaining == sent)
+    }
+
+    /// Review finding 4: loading the code-execution patch fails on its last writes, after the slot
+    /// was switched on. The session must know the slot is in an unknown state.
+    @Test func failedPatchWriteAsksForAnUnplug() async throws {
+        let exchanges = Self.recordings[Self.bulk]!.exchanges
+        // The second main-control sequence of the first patch ("5, 9", after the slot is enabled).
+        let lastWrites = Self.mainControlWrites(Self.bulk)[1]
+        let transport = ReplayTransport(Array(exchanges[..<lastWrites]) + [Self.failingExchange])
+        let session = try await session(transport)
+        let reader = try AtracDownloader(session: session, method: .bulk)
+        let loadError = await #expect(throws: ExploitError.self) { try await reader.prepare() }
+        #expect(loadError.map(Self.isUnplug) == true)
+        let closeError = await #expect(throws: ExploitError.self) { try await session.close() }
+        #expect(closeError.map(Self.isUnplug) == true)
+    }
+
+    /// Review finding 5: Stop used to cancel the task, and a cancelled task's waits end at once,
+    /// cutting commands and clean-up short. The player-side waits now always wait.
+    @Test func waitsAreNotCutShortByCancelling() async {
+        let task = Task { () -> Duration in
+            withUnsafeCurrentTask { $0?.cancel() }
+            let start = ContinuousClock.now
+            await uninterruptibleSleep(.milliseconds(60))
+            return ContinuousClock.now - start
+        }
+        #expect(await task.value >= .milliseconds(50))
+    }
+}

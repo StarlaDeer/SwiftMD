@@ -111,8 +111,32 @@ public func decodeBackup(_ file: [UInt8], fileExtension: String) throws -> (audi
 
 import AVFoundation
 
-/// Saves 44.1 kHz stereo PCM as an AAC .m4a file with Apple's encoder.
+public enum PlayableCopyError: Error, Equatable, CustomStringConvertible {
+    case noBuffer
+    case short(written: Int, expected: Int)
+
+    public var description: String {
+        switch self {
+        case .noBuffer: return "the Mac ran out of memory for the audio"
+        case .short(let written, let expected):
+            return "the playable copy came out \(String(format: "%.1f", Double(expected - written) / 44100)) s shorter than the track"
+        }
+    }
+}
+
+/// Saves 44.1 kHz stereo PCM as an AAC .m4a file with Apple's encoder, then reads it back to make
+/// sure it's all there (AVAudioFile only finishes the file when it's released, and says nothing if
+/// that fails).
 public func writeM4A(_ audio: PCMAudio, to url: URL, bitRate: Int = 256_000) throws {
+    try encodeM4A(audio, to: url, bitRate: bitRate)
+    let written = Int(try AVAudioFile(forReading: url).length)
+    // AAC works in 1024-sample packets, so allow a few packets either way.
+    guard abs(written - audio.frameCount) <= 4096 else {
+        throw PlayableCopyError.short(written: written, expected: audio.frameCount)
+    }
+}
+
+private func encodeM4A(_ audio: PCMAudio, to url: URL, bitRate: Int) throws {
     let settings: [String: Any] = [
         AVFormatIDKey: kAudioFormatMPEG4AAC,
         AVSampleRateKey: 44100,
@@ -126,7 +150,7 @@ public func writeM4A(_ audio: PCMAudio, to url: URL, bitRate: Int = 256_000) thr
     while start < audio.frameCount {
         let count = min(chunk, audio.frameCount - start)
         guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(count)),
-              let channels = buffer.floatChannelData else { break }
+              let channels = buffer.floatChannelData else { throw PlayableCopyError.noBuffer }
         buffer.frameLength = AVAudioFrameCount(count)
         for i in 0..<count {
             channels[0][i] = audio.samples[(start + i) * 2]

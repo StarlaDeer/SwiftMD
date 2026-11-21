@@ -120,7 +120,7 @@ public final class ExploitSession: @unchecked Sendable {
     public internal(set) var freePatches: [Int]
     let log: @Sendable (String) -> Void
     /// Sleeps for the given number of milliseconds. Tests replace it.
-    var sleep: @Sendable (Int) async throws -> Void = { try await Task.sleep(for: .milliseconds($0)) }
+    var sleep: @Sendable (Int) async throws -> Void = { await uninterruptibleSleep(.milliseconds($0)) }
 
     var usbExecution: USBCodeExecution?
     /// Set while the firmware's own fixes are merged to free a slot (SlotMerge.swift).
@@ -173,16 +173,29 @@ public final class ExploitSession: @unchecked Sendable {
     var patchBase: PatchPeripheralBase { version.hasPrefix("H") ? .himd : .netmd }
 
     /// Loads a patch into the next free slot and returns the slot.
+    /// If the write fails partway, the slot may be half-written and switched on, so nothing more
+    /// is changed and the session asks for an unplug.
     func patch(address: Int, value: [UInt8]) async throws -> Int {
+        if needsReset { throw ExploitError.needsUnplug("an earlier step failed") }
         guard let slot = freePatches.popLast() else {
             throw ExploitError.patchMemoryFull(maxPatches)
         }
-        try await factory.patch(address: address, value: value, number: slot, totalPatches: maxPatches, base: patchBase)
+        do {
+            try await factory.patch(address: address, value: value, number: slot, totalPatches: maxPatches, base: patchBase)
+        } catch {
+            needsReset = true
+            throw ExploitError.needsUnplug("loading patch slot \(slot) failed: \(error)")
+        }
         return slot
     }
 
     func unpatch(_ slot: Int) async throws {
-        try await factory.unpatch(number: slot, totalPatches: maxPatches, base: patchBase)
+        do {
+            try await factory.unpatch(number: slot, totalPatches: maxPatches, base: patchBase)
+        } catch {
+            needsReset = true
+            throw ExploitError.needsUnplug("removing patch slot \(slot) failed: \(error)")
+        }
         freePatches.append(slot)
     }
 
@@ -474,8 +487,15 @@ final class BulkSectorReader: CachedSectorReader {
     func unload() async throws {
         guard !slots.isEmpty else { return }
         // The init code patched the USB handler itself, so its own cleanup code removes the patches.
-        let exec = try await session.codeExecution()
-        _ = try await exec.execute(withSlots(payload.cleanupTemplate, payload.cleanupSlotOffsets))
+        // SwiftMD addition: if that fails, its hooks may still be live; changing more (removing code
+        // execution, restoring slots over them) could make it worse, so only an unplug is safe.
+        do {
+            let exec = try await session.codeExecution()
+            _ = try await exec.execute(withSlots(payload.cleanupTemplate, payload.cleanupSlotOffsets))
+        } catch {
+            session.needsReset = true
+            throw ExploitError.needsUnplug(String(describing: error))
+        }
         for slot in slots { session.releasePatchSlot(slot) }
         slots = []
     }
@@ -612,7 +632,8 @@ public struct DownloadedTrack: Sendable {
     public var fileExtension: String
     public var format: TrackFormat
     public var title: String?
-    /// False when the transfer stopped early, after too many unreadable sectors in a row.
+    /// False when the transfer stopped early (too many unreadable sectors in a row, cancelled, or a
+    /// sample), or when a sector was counted without its audio (see downloadTrack).
     public var complete: Bool
 }
 
@@ -697,10 +718,12 @@ public final class AtracDownloader: @unchecked Sendable {
     }
 
     /// Removes the reader from the player (ElectronWMD's finalizeDownload). Call before closing the session.
+    /// If the reader can't be taken out, the session needs an unplug (ExploitError.needsUnplug).
     public func finish() async throws {
         guard loaded else { return }
-        loaded = false
+        if session.needsReset { throw ExploitError.needsUnplug("an earlier step failed") }
         try await reader.unload()
+        loaded = false
     }
 
     /// Diagnostics: seeks to the start of a track, lets the buffer fill, and returns the first
@@ -724,7 +747,9 @@ public final class AtracDownloader: @unchecked Sendable {
     }
 
     /// Port of AtracRecovery.downloadTrack with the default config. `track` is zero-based.
-    public func downloadTrack(_ track: Int, progress: @Sendable (DownloadProgress) -> Void = { _ in },
+    /// With `sectorLimit`, stops after that many sectors and returns the start of the track (with
+    /// the same header as a full copy), marked incomplete: a sample to compare with an archived copy.
+    public func downloadTrack(_ track: Int, sectorLimit: Int? = nil, progress: @Sendable (DownloadProgress) -> Void = { _ in },
                               isCancelled: @Sendable () -> Bool = { false }) async throws -> DownloadedTrack {
         let device = session.device
         let factory = session.factory
@@ -802,12 +827,22 @@ public final class AtracDownloader: @unchecked Sendable {
             var alignmentKnockBack = 0.0
             var badSectorCounter = 0
             let maxBadSectors = 15
+            // SwiftMD addition: netmd-exploits counts a sector read when the junk sector that started
+            // a re-seek turns up again right after it, without adding any audio. The copy may then
+            // be a sector short, so it isn't trusted as complete (it never happens on a good read).
+            var countedWithoutAudio = false
 
             mainLoop: while sector < 0xfff && !isCancelled() {
                 if sectorsRead >= amount && nextSectorBeginInclude == 0 {
                     log("[AtracRecovery] Dumping complete!")
                     try await reader.finishDownload()
-                    return DownloadedTrack(data: output, fileExtension: fileExtension, format: format, title: trackTitle, complete: true)
+                    if countedWithoutAudio { log("[AtracRecovery] A sector was counted without audio; marking the copy incomplete.") }
+                    return DownloadedTrack(data: output, fileExtension: fileExtension, format: format, title: trackTitle, complete: !countedWithoutAudio)
+                }
+                if let sectorLimit, sectorsRead >= sectorLimit {
+                    log("[AtracRecovery] Sample of \(sectorsRead) sectors read.")
+                    try await reader.finishDownload()
+                    return DownloadedTrack(data: output, fileExtension: fileExtension, format: format, title: trackTitle, complete: false)
                 }
                 let content = try await reader.readNextSector()
                 sector += 1
@@ -851,6 +886,7 @@ public final class AtracDownloader: @unchecked Sendable {
                         if isAfterBlacklist {
                             sectorsRead += 1
                             isAfterBlacklist = false
+                            countedWithoutAudio = true
                         }
                         continue
                     }

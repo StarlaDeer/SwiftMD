@@ -96,13 +96,15 @@ do {
         let factory = try await iface.factory()
         let session = try await ExploitSession.create(device: iface, factory: factory) { print($0) }
         let sectors: [[UInt8]]
+        var downloader: AtracDownloader?
         do {
-            let downloader = try AtracDownloader(session: session, method: args.contains("--bulk") ? .bulk : nil)
-            sectors = try await downloader.readCachedSectors(track: number - 1, count: count)
-            try await downloader.finish()
+            let reader = try AtracDownloader(session: session, method: args.contains("--bulk") ? .bulk : nil)
+            downloader = reader
+            sectors = try await reader.readCachedSectors(track: number - 1, count: count)
+            try await reader.finish()
             try await session.close()
         } catch {
-            await tidyUp(nil, session)
+            await tidyUp(downloader, session)
             throw error
         }
         try FileManager.default.createDirectory(at: outDir, withIntermediateDirectories: true)
@@ -228,7 +230,7 @@ do {
         let info = try await iface.archiveInfo()
         print("Firmware: \(info.firmware)")
         guard NetMDInterface.canWritePendingChanges(firmware: info.firmware) else { print("No TOC write for this firmware."); exit(1) }
-        guard let fingerprint = discFingerprint(info.toc), let entry = ArchiveIndex.load(from: root).entry(for: fingerprint) else {
+        guard let fingerprint = discFingerprint(info.toc), let entry = try ArchiveIndex.load(from: root).entry(for: fingerprint) else {
             print("This disc isn't completely archived in \(root.path). Not erasing it.")
             exit(1)
         }

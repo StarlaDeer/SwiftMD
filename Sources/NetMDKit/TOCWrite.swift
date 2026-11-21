@@ -25,17 +25,31 @@ extension ExploitSession {
         // envelop(USBCodeExecution): loaded just for this unless something else already uses it.
         let wasLoaded = usbExecution != nil
         let exec = try await codeExecution()
-        _ = try await exec.execute(payload.lowerHead)
+        // SwiftMD addition: if the head can't be raised again, only an unplug is safe.
+        func raiseHead() async throws {
+            do {
+                _ = try await exec.execute(payload.raiseHead)
+            } catch {
+                needsReset = true
+                throw ExploitError.needsUnplug("raising the head failed: \(error)")
+            }
+        }
+        do {
+            _ = try await exec.execute(payload.lowerHead)
+        } catch {
+            needsReset = true
+            throw ExploitError.needsUnplug("lowering the head failed: \(error)")
+        }
         do {
             try await sleep(1000)
             _ = try await exec.execute(payload.trigger)
             try await sleep(50000)
         } catch {
             // SwiftMD addition: don't leave the head down if something fails in between.
-            _ = try? await exec.execute(payload.raiseHead)
+            try await raiseHead()
             throw error
         }
-        _ = try await exec.execute(payload.raiseHead)
+        try await raiseHead()
         if !wasLoaded {
             try await exec.unload()
             usbExecution = nil

@@ -259,7 +259,7 @@ extension NetMDInterface {
             _ = try await getTrackCount()
             disc = recomputeGroupsAfterTrackMove(disc, from: index, to: nil)
             try await eraseTrack(index)
-            try await Task.sleep(for: .milliseconds(100))
+            await uninterruptibleSleep(.milliseconds(100))
         }
         try await rewriteDiscGroups(disc)
     }

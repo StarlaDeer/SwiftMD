@@ -167,7 +167,7 @@ public actor NetMDInterface {
             case .rejected:
                 throw NetMDError.rejected(data.map { String(format: "%02x", $0) }.joined())
             case .interim where !acceptInterim:
-                try await Task.sleep(for: Self.interimResponseRetryInterval * ((1 << attempt) - 1))
+                await uninterruptibleSleep(Self.interimResponseRetryInterval * ((1 << attempt) - 1))
                 attempt += 1
                 continue // Retry
             default:

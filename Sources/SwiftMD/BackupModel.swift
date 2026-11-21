@@ -1,27 +1,29 @@
 import AppKit
+import os
 import Foundation
 import NetMDKit
 
-/// Playable copies being made while the player reads the next track.
 /// The files saved for each track, collected from the device's save callbacks.
 actor SavedFiles {
     private(set) var files: [Int: [String]] = [:]
     func add(_ index: Int, _ names: [String]) { files[index] = names }
 }
 
+/// Playable copies being made while the player reads the next track.
 actor PlayableCopies {
-    private var jobs: [(name: String, task: Task<Int, Error>)] = []
+    private var jobs: [(track: Int, name: String, task: Task<Int, Error>)] = []
 
-    func add(_ name: String, _ task: Task<Int, Error>) { jobs.append((name, task)) }
+    func add(track: Int, _ name: String, _ task: Task<Int, Error>) { jobs.append((track, name, task)) }
 
-    /// Waits for every copy; returns the names that failed or had unreadable stretches.
-    func finish() async -> [String] {
-        var problems: [String] = []
+    /// Waits for every copy; returns what went wrong with the ones that failed or had unreadable
+    /// stretches, by track.
+    func finish() async -> [(track: Int, problem: String)] {
+        var problems: [(track: Int, problem: String)] = []
         for job in jobs {
             do {
-                if try await job.task.value > 0 { problems.append("\(job.name) (has silent gaps)") }
+                if try await job.task.value > 0 { problems.append((job.track, "\(job.name) (has silent gaps)")) }
             } catch {
-                problems.append("\(job.name): \(error)")
+                problems.append((job.track, "\(job.name): \(error)"))
             }
         }
         jobs = []
@@ -29,16 +31,30 @@ actor PlayableCopies {
     }
 }
 
+/// What copyTracks managed, even when it stopped early.
+struct CopyResult {
+    /// The files of each track (zero-based index) that was copied completely and whose playable
+    /// copy decoded without trouble.
+    var files: [Int: [String]] = [:]
+    /// Trouble with playable copies (those tracks aren't in `files`).
+    var problems: [String] = []
+    /// Why the copy stopped, or BackupError.incomplete for tracks that couldn't be read completely.
+    var failure: Error?
+}
+
 extension DeviceModel {
     /// Copies tracks (zero-based) off the disc into `folder` as exact ATRAC files, plus a playable
-    /// .m4a of each in `folder/Playable`. Returns the files saved for each track (by index) and any
-    /// trouble with the playable copies. Shows progress; stops early if the task is cancelled.
+    /// .m4a of each in `folder/Playable`. Returns the tracks that are done (copied completely, and
+    /// their playable copy decoded cleanly) and what went wrong, even if it stopped early. A track
+    /// that couldn't be read completely is saved as "… (incomplete)" for what it's worth, but isn't
+    /// done. Shows progress; stops early when Stop is clicked.
     func copyTracks(_ indexes: [Int], titles: [String?], to folder: URL,
-                    using service: any DeviceService) async throws -> (files: [Int: [String]], problems: [String]) {
+                    using service: any DeviceService) async -> CopyResult {
         let count = indexes.count
         let playable = PlayableCopies()
         let playableFolder = folder.appendingPathComponent("Playable", isDirectory: true)
         let saved = SavedFiles()
+        var failure: Error?
         do {
             try await service.backUp(
                 tracks: indexes,
@@ -50,9 +66,15 @@ extension DeviceModel {
                     let fraction = (Double(i) + Double(p.read) / Double(max(p.total, 1))) / Double(count)
                     Task { @MainActor in self?.setActivity(text, progress: min(fraction, 1)) }
                 },
-                isCancelled: { Task.isCancelled },
+                isCancelled: { [stopRequest] in stopRequest.isSet },
                 save: { i, track in
                     let name = backupFileName(trackNumber: indexes[i] + 1, title: titles[i], fileExtension: track.fileExtension)
+                    guard track.complete else {
+                        // Keep what was read, clearly marked; it isn't counted as backed up.
+                        let partial = (name as NSString).deletingPathExtension + " (incomplete)." + track.fileExtension
+                        try Data(track.data).write(to: uniqueURL(in: folder, name: partial), options: .atomic)
+                        return
+                    }
                     let raw = uniqueURL(in: folder, name: name)
                     try Data(track.data).write(to: raw, options: .atomic)
                     // Make the playable copy in the background while the player reads the next track.
@@ -61,17 +83,18 @@ extension DeviceModel {
                     let job = Task.detached(priority: .utility) {
                         try makePlayableCopy(of: track.data, fileExtension: track.fileExtension, to: m4a)
                     }
-                    await playable.add(m4a.lastPathComponent, job)
+                    await playable.add(track: indexes[i], m4a.lastPathComponent, job)
                     await saved.add(indexes[i], [raw.lastPathComponent, "Playable/" + m4a.lastPathComponent])
                 }
             )
         } catch {
-            _ = await playable.finish()
-            throw error
+            failure = error
         }
         setActivity("Making playable copies…", progress: 1)
         let problems = await playable.finish()
-        return (await saved.files, problems)
+        var files = await saved.files
+        for problem in problems { files[problem.track] = nil }
+        return CopyResult(files: files, problems: problems.map(\.problem), failure: failure)
     }
 
     /// Copies tracks into a folder the user chose.
@@ -79,6 +102,7 @@ extension DeviceModel {
         guard let service = currentService, !isBusy, !indexes.isEmpty, let disc else { return }
         let titles = indexes.map { i in disc.tracks.first { $0.index == i }?.title }
         isBackingUp = true
+        stopRequest.reset()
         lastBackupFolder = nil
         errorMessage = nil
         setActivity("Starting backup…", progress: 0)
@@ -87,13 +111,17 @@ extension DeviceModel {
             let accessing = folder.startAccessingSecurityScopedResource()
             defer { if accessing { folder.stopAccessingSecurityScopedResource() } }
             do {
-                let result = try await copyTracks(indexes, titles: titles, to: folder, using: service)
+                let result = await copyTracks(indexes, titles: titles, to: folder, using: service)
+                if let failure = result.failure { throw failure }
                 if !result.problems.isEmpty {
                     errorMessage = "The backup worked, but some playable copies had trouble: \(result.problems.joined(separator: "; "))"
                 }
-                if !Task.isCancelled { lastBackupFolder = folder }
+                if !stopRequest.isSet { lastBackupFolder = folder }
             } catch ExploitError.untestedFirmware(let version) {
                 needsFirmwareOK(version) { [weak self] in self?.backUp(indexes, to: folder) }
+            } catch let error as BackupError {
+                errorMessage = "The backup finished with trouble: \(error)"
+                lastBackupFolder = folder
             } catch {
                 errorMessage = "Backup failed: \(error)"
             }
@@ -102,8 +130,10 @@ extension DeviceModel {
         }
     }
 
+    /// Asks the backup to stop after the current sector. The task isn't cancelled: that would cut
+    /// the player's clean-up short (see uninterruptibleSleep), and SwiftMD's code must come out first.
     func cancelBackup() {
-        uploadTask?.cancel()
+        stopRequest.set()
         setActivity("Stopping…", progress: uploadProgress)
     }
 
@@ -119,4 +149,12 @@ extension DeviceModel {
         panel.allowsMultipleSelection = false
         return panel.runModal() == .OK ? panel.url : nil
     }
+}
+
+/// A stop request that the backup checks from the player's side of the app.
+final class StopFlag: Sendable {
+    private let state = OSAllocatedUnfairLock(initialState: false)
+    var isSet: Bool { state.withLock { $0 } }
+    func set() { state.withLock { $0 = true } }
+    func reset() { state.withLock { $0 = false } }
 }

@@ -91,7 +91,7 @@ final class NetMD: @unchecked Sendable {
             var wait = Self.readReplyRetryInterval
             while len == 0 {
                 guard ContinuousClock.now < deadline else { throw NetMDError.noReply }
-                try await Task.sleep(for: wait)
+                await uninterruptibleSleep(wait)
                 wait = min(wait * 2, Self.maxReplyRetryInterval) // Double wait time every attempt, up to a limit
                 len = try getReplyLength()
             }
@@ -140,4 +140,11 @@ final class NetMD: @unchecked Sendable {
         }
         bulkBytesWritten += data.count
     }
+}
+
+/// Waits even if the calling task is cancelled. Task.sleep throws at once in a cancelled task, which
+/// would cut a command or a clean-up off halfway (a reply left unread, a patch half-removed);
+/// stopping is done between steps instead (isCancelled checks).
+func uninterruptibleSleep(_ duration: Duration) async {
+    await Task.detached { try? await Task.sleep(for: duration) }.value
 }

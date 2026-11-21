@@ -107,6 +107,8 @@ struct ContentView: View {
                         Button("Disconnect", systemImage: "cable.connector.slash") {
                             Task { await model.disconnect() }
                         }
+                        // Disconnecting mid-backup would leave SwiftMD's code on the player.
+                        .disabled(model.isBusy)
                     }
                 }
             }
@@ -183,6 +185,7 @@ struct ContentView: View {
             this firmware, and SwiftMD only ever changes the player's memory, never its firmware, but it \
             hasn't been tried with SwiftMD yet.
 
+            \((model.untestedFirmwarePrompt ?? "").hasPrefix("R") ? "Like every Type-R player, this one has no crash safety catch: if it crashed while SwiftMD's code was running, it could in rare cases scramble its stored settings. The MZ-N505 (R1.400) has been fine.\n\n" : "")\
             If something goes wrong, unplug the player for a few seconds. SwiftMD will remember your answer \
             for this firmware.
             """)
@@ -331,6 +334,7 @@ struct ArchiveBar: View {
 
 struct EraseBar: View {
     let model: DeviceModel
+    @State private var confirmEraseAnyway = false
 
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: 10) {
@@ -342,7 +346,9 @@ struct EraseBar: View {
                 .lineLimit(3)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer()
-            if model.canEraseInsertedDisc {
+            if model.canEraseUnarchivedDisc {
+                Button("Erase Anyway…", role: .destructive) { confirmEraseAnyway = true }
+            } else if model.canEraseInsertedDisc {
                 Button("Erase This Disc") { model.eraseInsertedDisc() }
                     .keyboardShortcut(.defaultAction)
             }
@@ -362,6 +368,18 @@ struct EraseBar: View {
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
         .background(.bar)
+        .alert(eraseAnywayTitle, isPresented: $confirmEraseAnyway) {
+            Button("Erase", role: .destructive) { model.eraseUnarchivedDisc() }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("This disc isn't in your SwiftMD archive, so SwiftMD can't check that it was copied. Only erase it if you've saved its recordings some other way. Erasing can't be undone.")
+        }
+    }
+
+    private var eraseAnywayTitle: String {
+        let tracks = model.disc?.tracks.count ?? 0
+        let name = model.disc.map { $0.title.isEmpty ? "this disc" : "“\($0.title)”" } ?? "this disc"
+        return "Erase \(name) (\(tracks) track\(tracks == 1 ? "" : "s"))?"
     }
 }
 

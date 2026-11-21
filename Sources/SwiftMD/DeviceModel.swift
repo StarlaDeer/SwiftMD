@@ -35,6 +35,9 @@ final class DeviceModel {
     // Erase mode (EraseModel.swift): every inserted disc that's completely archived is erased.
     var eraseMode = false
     var eraseStatus: String?
+    /// The disc Erase Mode just found isn't archived (its disc key and fingerprint), so it can
+    /// offer Erase Anyway for that disc only.
+    var unarchivedDisc: (key: String, fingerprint: String)?
     /// Portables (MZ-…, Sharp IM-…) keep edits in memory until the USB cable is unplugged, and
     /// their lid is opened by hand, so "eject" does nothing on them.
     var isPortable: Bool {
@@ -85,6 +88,8 @@ final class DeviceModel {
     private var service: (any DeviceService)?
     private var statusPolling: Task<Void, Never>?
     var uploadTask: Task<Void, Never>?
+    /// Stop for backups and archiving: checked between sectors, so the player is always tidied up.
+    let stopRequest = StopFlag()
 
     var currentService: (any DeviceService)? { service }
     var isUploading: Bool { uploadProgress != nil }
